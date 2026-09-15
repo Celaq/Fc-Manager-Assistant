@@ -6,7 +6,9 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 **v2.5.4 Point Collector Beta**
 
-[프로그램 ZIP 다운로드](releases/FC_Manager_Assistant_v2.5.4_Point_Collector_Beta.zip)
+[**v2.5.4 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.4_Point_Collector_Beta.zip)
+
+다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
 
 ### v2.5.4 수정 사항
 
