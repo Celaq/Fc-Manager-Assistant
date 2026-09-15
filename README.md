@@ -1,12 +1,19 @@
 # FC Manager Assistant
 
-FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows용 프로그램입니다.
+FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows PowerShell 프로그램입니다.
 
 ## 최신 테스트 버전
 
-**v2.5.1 Point Collector Beta**
+**v2.5.2 Point Collector Beta**
 
-[프로그램 ZIP 다운로드](releases/FC_Manager_Assistant_v2.5.1_Point_Collector_Beta.zip)
+[프로그램 ZIP 다운로드](releases/FC_Manager_Assistant_v2.5.2_Point_Collector_Beta.zip)
+
+### v2.5.2 수정 사항
+
+- 일반 모드가 마스터 등급 화면에만 의존하지 않도록 수정
+- 챔피언스·슈퍼챔피언스 화면의 `공식경기` 버튼 인식 지원
+- FC 창 크기에 맞춘 다중 크기 버튼 인식 적용
+- 버튼 탐색을 우측 하단으로 제한하고 실제 버튼 중앙을 클릭하도록 보완
 
 ## 주요 기능
 
@@ -22,14 +29,16 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows�
 1. 위 ZIP 파일을 내려받아 압축을 풉니다.
 2. FC 온라인을 **1280×720 창모드**, Windows 배율 **100%**로 실행합니다.
 3. `Start_FC_Manager.cmd`를 실행합니다.
-4. 화면 안내에 따라 설정한 뒤 자동 진행을 시작합니다.
+4. FC ONLINE 창을 선택한 뒤 `F9`를 눌러 시작합니다.
 5. 현재 경기 종료 후 멈추려면 `F10`을 누릅니다.
 
 자세한 내용은 압축 파일 안의 사용 설명서를 확인해 주세요.
 
-## 테스트 자료 보내기
+## 문의 및 오류 제보
 
-오작동이나 점수 인식 실패가 발생하면 프로그램이 만든 **오류확인용_보내기.zip** 파일을 제작자에게 전달해 주세요. 개인 설정 및 Discord 웹훅 정보는 배포 ZIP에 포함되어 있지 않습니다.
+- 이메일: [xkzl134@gmail.com](mailto:xkzl134@gmail.com)
+- 오작동이나 인식 실패가 발생하면 **오류확인용_보내기** 폴더를 압축해 첨부해 주세요.
+- 개인 설정 및 Discord 웹훅 정보는 배포 ZIP에 포함되어 있지 않습니다.
 
 ## 주의
 
