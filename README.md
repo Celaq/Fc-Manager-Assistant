@@ -4,11 +4,20 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v2.5.4 Point Collector Beta**
+**v2.5.5 Point Collector Beta**
 
-[**v2.5.4 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.4_Point_Collector_Beta.zip)
+[**v2.5.5 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.5_Point_Collector_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v2.5.5 수정 사항
+
+- FHD 1920×1080 환경의 실제 FC 창 1296×759 진단자료 반영
+- QHD/FHD를 실제 FC 창 크기에 맞춰 자동 보정
+- 랭킹 화면을 Esc 안내로 오인식해 설정창이 열리던 문제 수정
+- 자동 Esc 입력을 비활성화하고 S/Space 진행 경로만 사용
+- 기본 마우스 입력이 거부되면 호환 클릭으로 자동 재시도
+- 클릭 전후 대기시간을 추가해 FC 입력 안정성 개선
 
 ### v2.5.4 수정 사항
 
@@ -18,13 +27,6 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 - 화면별 확대 인식 기준을 분리하고 일괄 허용값 제거
 - S키 입력 시간을 늘리고 스캔코드 및 가상키 보강 입력 적용
 - 로그에 사용한 1280/2560 템플릿 출처 표시
-
-### v2.5.3 수정 사항
-
-- Windows 125%·150% 배율에서 FC 화면 오른쪽과 아래쪽이 잘리던 문제 수정
-- Per-monitor V2 DPI 인식 적용
-- 캡처 및 마우스 입력을 실제 픽셀 좌표로 통일
-- 진단정보에 DPI 모드와 실제 FC 창 크기·위치 기록
 
 ## 주요 기능
 
@@ -39,7 +41,7 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 1. 위 ZIP 파일을 내려받아 새 폴더에 압축을 풉니다.
 2. FC 온라인을 **1280×720 창모드**로 실행합니다.
-3. Windows 배율은 100%를 권장하며 125%·150%도 DPI 보정을 지원합니다.
+3. FHD·QHD 모두 지원하며 실제 FC 창 크기를 기준으로 자동 보정합니다.
 4. `Start_FC_Manager.cmd`를 실행합니다.
 5. FC ONLINE 창을 선택한 뒤 `F9`를 눌러 시작합니다.
 6. 현재 경기 종료 후 멈추려면 `F10`을 누릅니다.
