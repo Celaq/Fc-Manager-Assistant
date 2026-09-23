@@ -4,11 +4,18 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v2.5.6 Point Collector Beta**
+**v2.5.7 Point Collector Beta**
 
-[**v2.5.6 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.6_Point_Collector_Beta.zip)
+[**v2.5.7 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.7_Point_Collector_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v2.5.7 수정 사항
+
+- 경기 하이라이트 오른쪽 아래의 ESC 아이콘과 오른쪽의 밝은 SKIP 표시 영역을 함께 확인한 경우에만 Esc 입력
+- 오인식으로 설정 화면이 열리지 않도록 탐색 위치를 제한
+- 멈춤 알림 시 해당 화면을 진단 폴더에 자동 저장
+- 제공받은 화면 8장 교차 검사 완료. Windows 실제 경기 동작은 별도 확인 필요
 
 ### v2.5.6 수정 사항
 
