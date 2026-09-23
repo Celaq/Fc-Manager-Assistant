@@ -4,11 +4,17 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v2.5.5 Point Collector Beta**
+**v2.5.6 Point Collector Beta**
 
-[**v2.5.5 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.5_Point_Collector_Beta.zip)
+[**v2.5.6 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.6_Point_Collector_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v2.5.6 수정 사항
+
+- S 안내 글자와 테두리만 비교해 변화하는 경기 배경 때문에 인식이 멈추는 문제 개선
+- F8을 이번 판까지만 예약/취소 단축키로 적용하고 버튼에 표시
+- 제공된 S 화면 1장과 다른 화면 7장에서 인식·오인식을 검사함 (실제 Windows 게임 조작 검증은 별도 필요)
 
 ### v2.5.5 수정 사항
 
@@ -33,7 +39,7 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 - 감독모드 화면 인식 기반 자동 진행
 - 마스터·챔피언스·슈퍼챔피언스 공식경기 화면 지원
 - 승·무·패 기록 및 점수 화면 자료 수집
-- `F10` 단축키로 **이번 판까지만 진행**
+- `F8` 단축키로 **이번 판까지만 진행**
 - 오류 발생 시 화면 앞쪽 알림
 - Discord 웹훅 알림 지원
 
@@ -44,7 +50,7 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 3. FHD·QHD 모두 지원하며 실제 FC 창 크기를 기준으로 자동 보정합니다.
 4. `Start_FC_Manager.cmd`를 실행합니다.
 5. FC ONLINE 창을 선택한 뒤 `F9`를 눌러 시작합니다.
-6. 현재 경기 종료 후 멈추려면 `F10`을 누릅니다.
+6. 현재 경기 종료 후 멈추려면 `F8`을 누릅니다.
 
 ## 문의 및 오류 제보
 
