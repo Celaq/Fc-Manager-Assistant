@@ -4,11 +4,19 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v2.5.8 Point Collector Beta**
+**v3.0 일반·주차 베타**
 
-[**v2.5.8 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.8_Point_Collector_Beta.zip)
+[**v3.0 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.0_Parking_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v3.0 일반·주차 베타
+
+- 일반 모드와 주차 모드를 구분하고 주차 모드에서는 화면 배경색을 바꿉니다.
+- 챔피언스 랭킹 화면의 시작점수를 두 번 읽어 확인하고, 목표점수와 선택형 최저점수로 중지합니다.
+- 경기 보상 점수 변동을 누적하며 읽을 수 없는 화면에서는 다음 경기 전에 중지합니다.
+- 제공된 화면 67장에서 점수 숫자 판독을 시험했으며 Windows 실제 게임 테스트는 별도로 필요합니다.
+- 자세한 사용법과 검증 범위는 ZIP 안의 TXT 파일을 확인해 주세요.
 
 ### v2.5.8 수정 사항
 
@@ -52,6 +60,7 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 - 감독모드 화면 인식 기반 자동 진행
 - 마스터·챔피언스·슈퍼챔피언스 공식경기 화면 지원
 - 승·무·패 기록 및 점수 화면 자료 수집
+- 챔피언스 등급 주차 베타: 목표점수·최저점수 중지
 - `F8` 단축키로 **이번 판까지만 진행**
 - 오류 발생 시 화면 앞쪽 알림
 - Discord 웹훅 알림 지원
