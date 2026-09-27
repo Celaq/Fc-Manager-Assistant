@@ -4,11 +4,17 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v2.5.7 Point Collector Beta**
+**v2.5.8 Point Collector Beta**
 
-[**v2.5.7 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.7_Point_Collector_Beta.zip)
+[**v2.5.8 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v2.5.8_Point_Collector_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v2.5.8 수정 사항
+
+- 68경기 진단에서 확인된 S 표시 반복에 따른 잘못된 멈춤 알림 수정
+- 경기 화면이 3분간 바뀌지 않은 경우에만 S 반복 관련 멈춤 알림
+- 제공된 연속 진단 화면 70쌍과 정지 화면을 비교 검증. Windows 실제 게임 실행은 별도 확인 필요
 
 ### v2.5.7 수정 사항
 
