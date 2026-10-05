@@ -4,11 +4,21 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.0 일반·주차 베타**
+**v3.0.1 실행오류 수정 베타**
 
-[**v3.0 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.0_Parking_Beta.zip)
+[**v3.0.1 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.0.1_Runtime_Fix_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v3.0.1 실행오류 수정 베타
+
+- 등급 변경 안내 및 승급·강등·잔류 결과 화면의 확인 버튼 처리를 추가했습니다.
+- 챔피언스 아래 등급의 승점을 랭킹 점수 변화량으로 합산하던 오류를 수정했습니다.
+- 랭킹 점수 화면으로 복귀하면 다음 경기 전에 로비 현재점수를 두 번 읽어 재확인합니다.
+- `-67점` 판독을 보완하고 점수 판독 재시도 및 연속 확인을 추가했습니다.
+- 제공된 보상 화면 48장과 강등·잔류 정체 화면 31장을 포함한 144개 검사 및 Windows PowerShell 5.1 UI 구성 검사를 통과했습니다.
+- 실제 게임 조작, 승급 성공 화면, 등급 복귀 후 실제 로비 OCR 및 다른 해상도는 미검증입니다.
+- [수정 및 테스트 결과](releases/FC_Manager_Assistant_v3.0.1_Test_Report.txt)를 확인하고 새 폴더에 압축을 풀어 실행해 주세요.
 
 ### v3.0 일반·주차 베타
 
