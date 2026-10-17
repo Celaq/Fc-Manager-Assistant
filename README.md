@@ -4,11 +4,20 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.0.1 실행오류 수정 베타**
+**v3.0.2 실행오류 수정 베타**
 
-[**v3.0.1 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.0.1_Runtime_Fix_Beta.zip)
+[**v3.0.2 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.0.2_Runtime_Fix_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v3.0.2 실행오류 수정 베타
+
+- 레벨업 보상 및 네트워크 오류 확인창의 진행 처리를 추가했습니다.
+- 경기 보상 다음 버튼을 일반 확인보다 우선 처리하고, 마우스 올림에 따른 녹색 밝기 변화를 보정했습니다.
+- 숫자 3 판독 오류와 로비를 경기 결과로 잘못 집계하는 문제를 수정했습니다.
+- 새 자료와 이전 자료에 대한 814개 검사 및 Windows PowerShell 5.1 UI 구성 검사를 통과했습니다.
+- 실제 게임 입력·연결 복구 및 다른 해상도/배율은 미검증입니다. 기존 전적은 자동 보정하지 않습니다.
+- [수정 및 테스트 결과](releases/FC_Manager_Assistant_v3.0.2_Test_Report.txt)를 확인하고 새 폴더에서 실행해 주세요.
 
 ### v3.0.1 실행오류 수정 베타
 
