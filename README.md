@@ -4,11 +4,23 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.0.2 실행오류 수정 베타**
+**v3.1 디자인 개편 · N판 진행 베타**
 
-[**v3.0.2 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.0.2_Runtime_Fix_Beta.zip)
+[**v3.1 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.1_Design_MatchLimit_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v3.1 디자인 개편 · N판 진행
+
+![v3.1 프로그램 화면](releases/FC_Manager_v3.1_Preview.png)
+
+- 차콜 배경과 파란색 포인트, 큰 상태·진행 현황 및 설정/알림/로그 분리.
+- 판수 제한을 켜고 1~9999판을 지정하면 이번 시작 이후 완료한 N판에서 중지합니다.
+- 마지막 경기 결과를 저장하고 다음 화면을 넘긴 뒤 다음 경기 전에 중지합니다.
+- 주차 점수 조건과 판수 조건 중 먼저 충족된 조건으로 중지하며, 재시작하면 새로 N판을 셉니다.
+- 기존 회귀검사 814건과 새 기능·UI 검사 33건, 합계 847개 검사를 통과했습니다.
+- 실제 게임에 입력하는 연속 경기 테스트는 미완료입니다. 새 폴더에 압축을 풀어 실행해 주세요.
+- [사용법 및 테스트 결과](releases/FC_Manager_Assistant_v3.1_Test_Report.txt)
 
 ### v3.0.2 실행오류 수정 베타
 
