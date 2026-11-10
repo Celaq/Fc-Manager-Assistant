@@ -4,11 +4,24 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.1 디자인 개편 · N판 진행 베타**
+**v3.2 가독성 · 자동 업데이트 베타**
 
-[**v3.1 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.1_Design_MatchLimit_Beta.zip)
+[**v3.2 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.2_AutoUpdate_Beta.zip)
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
+
+### v3.2 가독성 · 자동 업데이트
+
+![v3.2 프로그램 화면](releases/FC_Manager_v3.2_Preview.png)
+
+- 본문 글씨와 숫자 입력을 키우고 글자 대비·설정 간격을 개선했습니다.
+- 시작 시 새 버전을 확인하며, 변경내용 확인 후 버튼으로 업데이트할 수 있습니다.
+- 진행 중 설치 차단, ZIP/파일 해시 검증, 개인 설정·전적 보존, 실패 시 복구를 지원합니다.
+- 3.1 이하에는 업데이트 기능이 없으므로 **이번 3.2는 새 폴더에 수동 설치**해 주세요. 이후 버전부터 앱 내 업데이트를 사용할 수 있습니다.
+- 추가 게임/네트워크 오류창 59장 처리, 숫자 6 스코어 판독 및 짧은 하이라이트 반복에 대한 멈춤 오알림을 보완했습니다.
+- 새 진단 점수 화면 946장, 기존 회귀검사, 설치·복구·별도 프로세스 재실행 검사를 통과했습니다.
+- 실제 게임 입력과 다음 버전의 온라인 설치는 별도 확인이 필요합니다.
+- [사용법 및 검증 범위](releases/FC_Manager_Assistant_v3.2_Test_Report.txt)
 
 ### v3.1 디자인 개편 · N판 진행
 

@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "version": "3.2.0",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_Assistant_v3.2_AutoUpdate_Beta.zip",
+  "sha256": "b9ea5e1b9149884a36af1b27d01c37700e07d0cca4938d5e2e552e5d25bc0c49",
+  "notes": "본문·입력 글씨 확대와 대비 개선\n새 버전 확인·검증·설정 보존·복구 후 재실행\n추가 게임/네트워크 오류창 처리 및 숫자 6 판독 보완"
+}
