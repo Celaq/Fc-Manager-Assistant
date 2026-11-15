@@ -4,9 +4,18 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.2 가독성 · 자동 업데이트 베타**
+**v3.2.3 기부·보상 예약 베타**
 
-[**v3.2 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_Assistant_v3.2_AutoUpdate_Beta.zip)
+[**v3.2.3 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_v3.2.3_Daily_Rewards_Beta.zip)
+
+v3.2 이상은 앱의 **업데이트 확인** 버튼으로 설치할 수 있습니다.
+자동 진행을 중지한 뒤 업데이트를 적용해 주세요.
+
+- 클럽 기부와 미션 허브 자동 확인: 한국 시간 23:30부터 자정 전까지 항목별 하루 1회.
+- ‘다음 경기 후 기부·보상 확인’ 예약 버튼 추가.
+- 일정·예약·설치 테스트 완료. 실게임 조작은 미검증입니다.
+
+
 
 다운로드가 시작되지 않으면 링크를 마우스 오른쪽 버튼으로 눌러 **새 탭에서 열기**를 선택해 주세요.
 
