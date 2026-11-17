@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.3",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.3_Daily_Rewards_Beta.zip",
-  "sha256": "e877a36ee70a11020eca20d3228c6cc5504c98122881b6fb2cad58c9aa43eecd",
-  "notes": "클럽 기부와 미션 허브 보상: 한국 시간 23:30부터 자정 전까지 항목별 자동 확인\n다음 경기 후 기부·보상 확인 예약 버튼 추가"
+  "version": "3.2.4",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.4_Mission_Lobby_Fix_Beta.zip",
+  "sha256": "1749176a15b28815d963c203909d93c63e9895bb29039004a38004ced637d9d2",
+  "notes": "경기 사이 창모드 미션 허브 인식 보완. 시간 초과 시 단계와 화면 저장."
 }
