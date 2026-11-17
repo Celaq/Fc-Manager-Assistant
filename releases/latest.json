@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.5",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.5_Reward_Alerts_Beta.zip",
-  "sha256": "0dc97b5b11e2f68f847299fe808ec88ef2ac8286bd46fa0eaeb10fae4c18ab2d",
-  "notes": "녹화의 실제 회색 수령 버튼 인식. 미션 허브·클럽 기부 시간 초과 시 Discord에 실패 단계 알림."
+  "version": "3.2.6",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.6_Daily_Stats_Beta.zip",
+  "sha256": "92916c8ceca7a4a873577d56234b4603ac897d43b7af12a06ab6bc6e40cf34ac",
+  "notes": "일별 전적 탭에서 날짜마다 총 경기, 승·무·패, 미분류 경기, 승률을 확인할 수 있습니다."
 }
