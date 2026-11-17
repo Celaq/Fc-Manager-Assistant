@@ -4,16 +4,16 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.2.4 미션 허브 인식 수정 베타**
+**v3.2.5 보상 확인 및 Discord 알림 베타**
 
-[**v3.2.4 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_v3.2.4_Mission_Lobby_Fix_Beta.zip)
+[**v3.2.5 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_v3.2.5_Reward_Alerts_Beta.zip)
 
 v3.2 이상은 앱의 **업데이트 확인** 버튼으로 설치할 수 있습니다.
 자동 진행을 중지한 뒤 업데이트를 적용해 주세요.
 
 - 클럽 기부와 미션 허브 자동 확인: 한국 시간 23:30부터 자정 전까지 항목별 하루 1회.
 - ‘다음 경기 후 기부·보상 확인’ 예약 버튼 추가.
-- 경기 사이 미션 허브 화면 인식 보완. 실패하면 로그에 단계와 진단 화면을 남깁니다.
+- 경기 사이 미션 허브의 회색 수령 버튼을 실제 녹화로 확인했습니다. 시간 초과 시 Discord 알림을 켜 둔 경우 실패 단계를 보냅니다.
 - 저장 화면 인식과 업데이트 설치를 검사했습니다. 실게임 조작은 미검증입니다.
 
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.4",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.4_Mission_Lobby_Fix_Beta.zip",
-  "sha256": "1749176a15b28815d963c203909d93c63e9895bb29039004a38004ced637d9d2",
-  "notes": "경기 사이 창모드 미션 허브 인식 보완. 시간 초과 시 단계와 화면 저장."
+  "version": "3.2.5",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.5_Reward_Alerts_Beta.zip",
+  "sha256": "0dc97b5b11e2f68f847299fe808ec88ef2ac8286bd46fa0eaeb10fae4c18ab2d",
+  "notes": "녹화의 실제 회색 수령 버튼 인식. 미션 허브·클럽 기부 시간 초과 시 Discord에 실패 단계 알림."
 }
