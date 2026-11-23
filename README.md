@@ -4,7 +4,16 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.2.6 일별 전적 베타**
+**v3.2.7 자동 복귀 · 대시보드 베타**
+
+[**v3.2.7 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_v3.2.7_Recovery_Dashboard_Beta.zip)
+
+- 클럽 기부나 미션 허브 확인에 실패하면 Discord로 알리고 감독모드 로비 복귀를 시도합니다. 로비 복귀가 확인되면 기존 판수와 중지 예약을 유지합니다. 15초 안에 돌아오지 못하면 복귀 실패를 알리고 중지합니다.
+- 확인된 승급·강등 결과를 경기당 한 번 Discord로 알립니다. Discord 알림 설정과 Windows 한국어 OCR이 필요합니다.
+- 상단에서 현재 상태와 경기 진행률을 확인하고, 왼쪽 메뉴에서 진행 설정·일별 전적·Discord·실행 기록을 전환합니다.
+- Linux에서 상태 전이와 배포 패키지를 검증했습니다. Windows 화면 표시, 실제 게임 입력과 등급 OCR은 별도 확인이 필요합니다.
+
+### v3.2.6 일별 전적 베타
 
 [**v3.2.6 프로그램 ZIP 바로 다운로드**](https://github.com/Celaq/Fc-Manager-Assistant/raw/refs/heads/main/releases/FC_Manager_v3.2.6_Daily_Stats_Beta.zip)
 

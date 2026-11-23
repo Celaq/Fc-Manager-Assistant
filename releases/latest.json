@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.6",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.6_Daily_Stats_Beta.zip",
-  "sha256": "92916c8ceca7a4a873577d56234b4603ac897d43b7af12a06ab6bc6e40cf34ac",
-  "notes": "일별 전적 탭에서 날짜마다 총 경기, 승·무·패, 미분류 경기, 승률을 확인할 수 있습니다."
+  "version": "3.2.7",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.7_Recovery_Dashboard_Beta.zip",
+  "sha256": "4ad3866a7328dcecfada3c8db3b2e8629e725620838ae49488876d729ef6b75c",
+  "notes": "클럽 기부·미션 허브 실패 후 감독모드 복귀를 시도하고, 승급·강등 Discord 알림과 새 대시보드를 제공합니다."
 }
