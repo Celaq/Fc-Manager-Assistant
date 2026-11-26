@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.7",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.7_Recovery_Dashboard_Beta.zip",
-  "sha256": "4ad3866a7328dcecfada3c8db3b2e8629e725620838ae49488876d729ef6b75c",
-  "notes": "클럽 기부·미션 허브 실패 후 감독모드 복귀를 시도하고, 승급·강등 Discord 알림과 새 대시보드를 제공합니다."
+  "version": "3.2.9",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.9_BP_Protection_Beta.zip",
+  "sha256": "6a40579db6da8cbc5053ae1bb8f815ce9f22ead55cab09d7f0735473dc95f5e3",
+  "notes": "선수 강화 준비 화면에서 BP 강화 보호를 100%로 설정하고, 확률 값 유지와 보호 적용을 확인하는 버튼을 추가했습니다."
 }
