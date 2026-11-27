@@ -352,7 +352,7 @@ class Desktop:
     def show_notes(self):
         release = self.available_release
         notes = release.notes if release else (
-            "훈련코치 모집 중 후보 목록이 바뀌면 클릭을 보류하고 여섯 칸을 다시 확인합니다.")
+            "시작 버튼이나 F9를 누르면 실행 중인 FC 온라인 창을 앞으로 가져온 뒤 감독모드를 시작합니다. 최소화된 게임 창도 복원합니다.")
         messagebox.showinfo("변경 내용", notes, parent=self.root)
 
     def check_update(self):

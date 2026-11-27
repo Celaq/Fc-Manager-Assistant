@@ -105,8 +105,12 @@ class Controller:
             self.manager.confirm_rank(first)
         return first
 
-    def _start_manager(self):
+    def _start_manager(self, *, focus=False):
         o = self.options
+        if focus:
+            self.game.focus_game(on_wait=self.ctx.log)
+            if self.ctx.stop_requested():
+                raise InterruptedError("감독모드 시작을 중지했습니다.")
         self.manager.start(parking=o.parking, target=o.target, minimum=o.minimum, limit=o.limit)
         if not self.manager.running:
             raise ValueError(self.manager.status)
@@ -157,7 +161,7 @@ class Controller:
             try:
                 if action == "start" and self.maintenance.armed and not self.manager.running:
                     self.options = value
-                    self._start_manager()
+                    self._start_manager(focus=self.game.game_present())
                     self.maintenance.interrupted = not self.game.game_present()
                 elif action == "finish" and self.manager.running:
                     self.manager.toggle_finish()
@@ -184,7 +188,7 @@ class Controller:
         if reservation:
             self.maintenance.arm(reservation, running=False)
         else:
-            self._start_manager()
+            self._start_manager(focus=True)
         while not self.ctx.stop_requested() and (self.manager.running or self.maintenance.armed):
             now = monotonic()
             self._controls()

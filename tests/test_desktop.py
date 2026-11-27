@@ -6,6 +6,7 @@ from tempfile import TemporaryDirectory
 from threading import Event
 from time import monotonic, sleep
 from unittest import TestCase, skipUnless
+from unittest.mock import Mock, patch
 import os
 
 from fc_manager.controller import Controller, Options, Presence
@@ -63,6 +64,34 @@ class IntegrationTests(TestCase):
         with self.assertRaises(ValueError):
             self.controller.manager.start(parking=True, target=4000)
 
+    def test_start_selects_game_before_manager_starts(self):
+        calls = []
+        def focus(on_wait):
+            calls.append("focus")
+            return True
+        def start(**options):
+            calls.append("start")
+            self.ctx.cancel.set()
+            self.controller.manager.running = True
+        with patch.object(self.game, "focus_game", focus), patch.object(self.controller.manager, "start", start):
+            self.controller._run_manager(None)
+        self.assertEqual(calls, ["focus", "start"])
+
+    def test_unavailable_game_does_not_start_automation(self):
+        with patch.object(self.game, "focus_game", side_effect=RuntimeError("game unavailable")), \
+                patch.object(self.controller.manager, "start") as start:
+            self.controller._work("manager", (Options(), None))
+        start.assert_not_called()
+        self.assertFalse(self.controller.manager.running)
+
+    def test_explicit_start_in_armed_reservation_selects_running_game(self):
+        self.controller.maintenance.arm(datetime.now(timezone.utc) + timedelta(hours=1))
+        self.controller.commands.put(("start", Options()))
+        with patch.object(self.game, "game_present", return_value=True), patch.object(self.game, "focus_game") as focus:
+            self.controller._controls()
+        focus.assert_called_once_with(on_wait=self.ctx.log)
+        self.assertTrue(self.controller.manager.running)
+
     def test_exit_debounce_and_relaunch(self):
         state = Presence(False)
         for now, exists, exited in [(0, False, False), (2, True, False), (3, False, False),
@@ -72,6 +101,7 @@ class IntegrationTests(TestCase):
 
     def test_reservation_worker_ownership_and_cancel(self):
         reserve = datetime.now(timezone.utc) + timedelta(hours=1)
+        self.game.focus_game = Mock()
         self.controller.launch("manager", (Options(), reserve))
         try:
             with self.assertRaises(ValueError):
@@ -84,6 +114,7 @@ class IntegrationTests(TestCase):
             self.controller.thread.join(2)
             self.assertFalse(self.controller.busy)
             self.assertFalse(self.controller.manager.running)
+            self.game.focus_game.assert_not_called()
         finally:
             self.controller.stop()
 

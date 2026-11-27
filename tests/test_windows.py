@@ -214,6 +214,35 @@ class WindowTests(unittest.TestCase):
             self.game.focus_game()
         self.native.activate.assert_not_called()
 
+    def test_retry_activation_after_async_restore(self):
+        self.native.client.side_effect = [None, None, None, self.client]
+        self.native.find_game_window.return_value = self.client.hwnd
+        self.native.pid.return_value = self.client.pid
+        with patch.object(windows.time, "monotonic", side_effect=[100, 100.1, 101.1]):
+            self.assertTrue(self.game.focus_game())
+        self.assertEqual([c.args for c in self.native.activate.call_args_list], [(self.client.hwnd,)] * 2)
+        self.native.click_pair.assert_not_called()
+
+    def test_minimized_game_is_restored_before_activation(self):
+        native = object.__new__(windows._Win32)
+        native.user = MagicMock()
+        hwnd = self.client.hwnd
+        native.user.IsIconic.return_value = True
+        native.user.GetForegroundWindow.return_value = hwnd
+        self.assertTrue(native.activate(hwnd))
+        self.assertEqual([(c[0], c.args) for c in native.user.method_calls], [
+            ("IsIconic", (hwnd,)), ("ShowWindowAsync", (hwnd, 9)),
+            ("SetForegroundWindow", (hwnd,)), ("GetForegroundWindow", ())])
+
+    def test_reused_handle_is_not_activated_on_retry(self):
+        self.native.client.return_value = None
+        self.native.find_game_window.return_value = self.client.hwnd
+        self.native.pid.side_effect = [self.client.pid, self.client.pid + 1]
+        with patch.object(windows.time, "monotonic", side_effect=[100, 101.1]):
+            with self.assertRaisesRegex(windows.WindowUnavailable, "창이 변경"):
+                self.game.focus_game()
+        self.native.activate.assert_called_once_with(self.client.hwnd)
+
     def test_explicit_focus_times_out_on_an_unrelated_foreground(self):
         # Start in the helper. The next window belongs to a different game HWND.
         self.native.client.side_effect = [None, replace(self.client, hwnd=888)]

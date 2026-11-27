@@ -310,7 +310,7 @@ class WindowsGame:
         return self._native.client() is not None
 
     def focus_game(self, on_wait=None):
-        """Explicit start: Windows may grant foreground asynchronously, or require a user click."""
+        """Restore and activate the identified game window, then verify its foreground client."""
         if self.foreground_game():
             return True
         hwnd = self._native.find_game_window()
@@ -319,7 +319,10 @@ class WindowsGame:
                 raise WindowUnavailable("FC 온라인은 실행 중이지만 표시 가능한 게임 창이 없습니다. 게임 화면이 열린 뒤 다시 시도하세요.")
             raise WindowUnavailable("FC 온라인 프로세스(fczf.exe)가 확인되지 않았습니다. 게임 실행 상태를 확인하세요.")
         pid = self._native.pid(hwnd)
-        deadline = time.monotonic() + 12
+        if not pid or not self._native.is_game_pid(pid):
+            raise WindowUnavailable("창을 전환하기 전에 FC 온라인 게임 창이 변경되었습니다.")
+        start = time.monotonic()
+        deadline, retry_at = start + 12, start + 1
         if self.stop_requested and self.stop_requested():
             raise InterruptedError("창 전환 대기를 중지했습니다.")
         self._native.activate(hwnd)
@@ -330,10 +333,16 @@ class WindowsGame:
             client = self._native.client()
             if client and client.hwnd == hwnd and client.pid == pid:
                 return True
-            if time.monotonic() >= deadline:
+            now = time.monotonic()
+            if now >= deadline:
                 raise WindowUnavailable(f"FC 온라인 게임 창(PID {pid})을 찾았으나 12초 안에 활성화하지 못했습니다. 게임 창을 직접 선택한 뒤 다시 시도하세요.")
+            if now >= retry_at:
+                if self._native.pid(hwnd) != pid:
+                    raise WindowUnavailable("창을 전환하는 동안 FC 온라인 게임 창이 변경되었습니다.")
+                self._native.activate(hwnd)
+                retry_at = now + 1
             if on_wait and not announced:
-                on_wait("FC 온라인 게임 창 전환 대기 중 · 12초 안에 게임 창을 직접 선택해도 됩니다.")
+                on_wait("FC 온라인 게임 창을 앞으로 가져오는 중입니다.")
                 announced = True
             time.sleep(0.1)
 
