@@ -352,8 +352,7 @@ class Desktop:
     def show_notes(self):
         release = self.available_release
         notes = release.notes if release else (
-            "3.3.4의 감독모드, 주차, 보상, BP 강화 보호, 훈련코치 7개 조합과 Discord 연동을 "
-            "Python으로 옮겼습니다. Python 채널에서 다음 업데이트를 확인합니다.")
+            "게임 창을 찾는 방법을 개선하고, 게임이 실행 중일 때 창 전환을 최대 12초간 기다립니다.")
         messagebox.showinfo("변경 내용", notes, parent=self.root)
 
     def check_update(self):

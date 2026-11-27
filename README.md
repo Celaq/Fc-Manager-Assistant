@@ -2,9 +2,11 @@
 
 FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 도우미입니다.
 
-## Windows Python 배포판 3.3.4
+## Windows Python 배포판 3.3.5
 
-[Windows x64 Python 배포판 다운로드](https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_Python_v3.3.4_win64.zip)
+[Windows x64 Python 배포판 다운로드](https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_Python_v3.3.5_win64.zip)
+
+Python 3.3.4 사용자는 **업데이트 확인**에서 설치할 수 있습니다. 3.3.5에서는 게임 창 탐지와 활성화를 구분하며, 전환이 늦어지면 12초 동안 게임 창을 직접 선택할 수 있습니다.
 
 ZIP 전체를 **새 폴더**에 풀고 `Start_FC_Manager.cmd`를 실행하세요. Python, Tk와 화면 인식 라이브러리를 포함합니다. 배포판의 **업데이트 확인** 버튼에서 Python 배포 채널을 조회합니다.
 

@@ -20,7 +20,7 @@ class Game:
     def game_present(self):
         return False
 
-    def focus_game(self):
+    def focus_game(self, on_wait=None):
         return True
 
     def focus_game_for_maintenance(self):

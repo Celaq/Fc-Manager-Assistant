@@ -197,6 +197,58 @@ class WindowTests(unittest.TestCase):
         self.assertEqual(owner_threads[0], owner_threads[1])
         self.assertNotEqual(owner_threads[0], threading.get_ident())
 
+    def test_explicit_focus_waits_for_verified_delayed_foreground(self):
+        self.native.client.side_effect = [None, None, self.client]
+        self.native.find_game_window.return_value = self.client.hwnd
+        self.native.pid.return_value = self.client.pid
+        self.native.activate.return_value = False  # foreground has not changed yet
+        self.assertTrue(self.game.focus_game())
+        self.native.activate.assert_called_once_with(self.client.hwnd)
+        self.native.click_pair.assert_not_called()
+
+    def test_running_process_without_game_window_is_reported_separately(self):
+        self.native.client.return_value = None
+        self.native.find_game_window.return_value = None
+        self.native.game_pids.return_value = {self.client.pid}
+        with self.assertRaisesRegex(windows.WindowUnavailable, "실행 중.*게임 창"):
+            self.game.focus_game()
+        self.native.activate.assert_not_called()
+
+    def test_explicit_focus_times_out_on_an_unrelated_foreground(self):
+        # Start in the helper. The next window belongs to a different game HWND.
+        self.native.client.side_effect = [None, replace(self.client, hwnd=888)]
+        self.native.find_game_window.return_value = self.client.hwnd
+        self.native.pid.return_value = self.client.pid
+        with patch.object(windows.time, "monotonic", side_effect=(100, 112)):
+            with self.assertRaisesRegex(windows.WindowUnavailable, "창.*활성화"):
+                self.game.focus_game()
+        self.native.click_pair.assert_not_called()
+
+    def test_explicit_focus_can_be_cancelled_without_sending_game_input(self):
+        self.native.client.return_value = None
+        self.native.find_game_window.return_value = self.client.hwnd
+        self.game.stop_requested = lambda: True
+        with self.assertRaises(InterruptedError):
+            self.game.focus_game()
+        self.native.activate.assert_not_called()
+        self.native.click_pair.assert_not_called()
+
+    def test_process_and_window_not_found_are_distinct(self):
+        self.native.client.return_value = None
+        self.native.find_game_window.return_value = None
+        self.native.game_pids.return_value = set()
+        with self.assertRaisesRegex(windows.WindowUnavailable, "프로세스"):
+            self.game.focus_game()
+
+    def test_game_pid_can_be_verified_when_executable_path_is_unreadable(self):
+        native = object.__new__(windows._Win32)
+        native.process_name = lambda pid: ""
+        native.game_pids = lambda: {45}
+        self.assertTrue(native.is_game_pid(45))
+        self.assertFalse(native.is_game_pid(46))
+        native.process_name = lambda pid: "nexonplug.exe"
+        self.assertFalse(native.is_game_pid(45))
+
     def test_unattended_focus_guard(self):
         self.native.client.return_value = None
         self.native.pid.return_value = 80000

@@ -107,7 +107,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache", type=Path, default=Path.home() / ".cache/fc-manager-build")
     parser.add_argument("--output", type=Path, default=ROOT / "dist")
-    parser.add_argument("--notes", default="FC Manager 3.3.4 Python Windows 배포판")
+    parser.add_argument("--notes", default=f"FC Manager {__version__} Python Windows 배포판")
     args = parser.parse_args()
     args.cache.mkdir(parents=True, exist_ok=True)
     args.output.mkdir(parents=True, exist_ok=True)

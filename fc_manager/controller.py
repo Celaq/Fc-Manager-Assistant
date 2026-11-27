@@ -93,8 +93,8 @@ class Controller:
 
     def _confirm_rank(self, focus=False):
         self.manager.rank_read_at = self.manager.starting_rank = self.manager.current_rank = None
-        if focus and not self.game.focus_game():
-            raise ValueError("FC 온라인 창을 열고 챔피언스 감독 랭킹을 표시하세요.")
+        if focus:
+            self.game.focus_game(on_wait=self.ctx.log)
         with self.game.pin_client():
             first = self.game.read_rank(self.ctx.capture())
             if first is None or self.ctx.cancel.wait(0.35):
@@ -120,12 +120,10 @@ class Controller:
             elif kind == "rank":
                 message = f"시작점수 {self._confirm_rank(focus=True)}점"
             elif kind == "capture":
-                if not self.game.focus_game():
-                    raise ValueError("FC 온라인 창을 찾지 못했습니다.")
+                self.game.focus_game(on_wait=self.ctx.log)
                 message = f"화면 저장 · {self.ctx.save_capture().name}"
             elif kind in ("coach", "bp"):
-                if not self.game.focus_game():
-                    raise ValueError("FC 온라인 창을 찾지 못했습니다.")
+                self.game.focus_game(on_wait=self.ctx.log)
                 with self.game.pin_client():
                     if kind == "coach":
                         message = run_coach(self.ctx, *payload)
@@ -135,7 +133,9 @@ class Controller:
         except Exception as exc:
             if kind == "manager" and self.manager.running and not self.ctx.stop_requested():
                 self.ctx.notify("FC 감독모드 프로그램 오류", f"{exc} · {self.manager.summary()}")
-            message = "작업을 중지했습니다." if self.ctx.stop_requested() else str(exc)
+            operation = {"coach": "코치 모집", "bp": "BP 강화 보호", "capture": "화면 저장", "rank": "시작점수 판독"}
+            message = ("작업을 중지했습니다." if self.ctx.stop_requested() else
+                       f"{operation[kind]} · {exc}" if kind in operation else str(exc))
             if not self.ctx.stop_requested():
                 self.ctx.log(f"작업 중지 · {message}")
                 self.ctx.report(message)
@@ -172,8 +172,7 @@ class Controller:
                     if self.maintenance.cancel() and self.manager.running:
                         self.manager.stop("점검 후 시작 예약 취소")
                 elif action == "capture":
-                    if not self.game.focus_game():
-                        raise ValueError("FC 온라인 창을 찾지 못했습니다.")
+                    self.game.focus_game(on_wait=self.ctx.log)
                     self.ctx.save_capture()
             except (OSError, ValueError, RuntimeError) as exc:
                 self.ctx.log(str(exc))

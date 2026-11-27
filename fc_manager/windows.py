@@ -33,6 +33,14 @@ class _Rect(C.Structure):
     _fields_ = [(name, C.c_int32) for name in ("left", "top", "right", "bottom")]
 
 
+class _ProcessEntry(C.Structure):
+    # PROCESSENTRY32W. Toolhelp lists executable names without opening game processes.
+    _fields_ = [("size", C.c_uint32), ("usage", C.c_uint32), ("pid", C.c_uint32),
+                ("heap", C.c_size_t), ("module", C.c_uint32), ("threads", C.c_uint32),
+                ("parent", C.c_uint32), ("priority", C.c_int32), ("flags", C.c_uint32),
+                ("exe", C.c_wchar * 260)]
+
+
 class _Mouse(C.Structure):
     _fields_ = [("dx", C.c_int32), ("dy", C.c_int32), ("data", C.c_uint32),
                 ("flags", C.c_uint32), ("time", C.c_uint32), ("extra", C.c_size_t)]
@@ -67,13 +75,22 @@ class _Win32:
             raise OSError("게임 창 제어는 Windows에서만 사용할 수 있습니다.")
         u = self.user = C.WinDLL("user32", use_last_error=True)
         hwnd, uint, boolean = C.c_void_p, C.c_uint32, C.c_int32
+        self.kernel = C.WinDLL("kernel32", use_last_error=True)
+        for fn, result, args in (
+            ("CreateToolhelp32Snapshot", hwnd, [uint, uint]),
+            ("Process32FirstW", boolean, [hwnd, C.POINTER(_ProcessEntry)]),
+            ("Process32NextW", boolean, [hwnd, C.POINTER(_ProcessEntry)]),
+            ("CloseHandle", boolean, [hwnd]),
+        ):
+            method = getattr(self.kernel, fn)
+            method.restype, method.argtypes = result, args
         self.enum_proc = C.WINFUNCTYPE(boolean, hwnd, C.c_ssize_t)
         signatures = {
             "GetForegroundWindow": (hwnd, []),
             "GetWindowThreadProcessId": (uint, [hwnd, C.POINTER(uint)]),
             "IsWindowVisible": (boolean, [hwnd]),
             "IsIconic": (boolean, [hwnd]),
-            "ShowWindow": (boolean, [hwnd, C.c_int]),
+            "ShowWindowAsync": (boolean, [hwnd, C.c_int]),
             "SetForegroundWindow": (boolean, [hwnd]),
             "EnumWindows": (boolean, [self.enum_proc, C.c_ssize_t]),
             "GetClientRect": (boolean, [hwnd, C.POINTER(_Rect)]),
@@ -116,17 +133,35 @@ class _Win32:
         except (psutil.AccessDenied, psutil.NoSuchProcess):
             return ""
 
-    @staticmethod
-    def game_pids():
-        return {p.pid for p in psutil.process_iter(["name"])
-                if (p.info["name"] or "").casefold() == "fczf.exe"}
+    def game_pids(self):
+        handle = self.kernel.CreateToolhelp32Snapshot(2, 0)  # TH32CS_SNAPPROCESS
+        if handle == C.c_void_p(-1).value:
+            raise C.WinError(C.get_last_error())
+        try:
+            entry = _ProcessEntry()
+            entry.size = C.sizeof(entry)
+            pids = set()
+            present = self.kernel.Process32FirstW(handle, C.byref(entry))
+            while present:
+                if entry.exe.casefold() == "fczf.exe":
+                    pids.add(entry.pid)
+                present = self.kernel.Process32NextW(handle, C.byref(entry))
+            if C.get_last_error() != 18:  # ERROR_NO_MORE_FILES
+                raise C.WinError(C.get_last_error())
+            return pids
+        finally:
+            self.kernel.CloseHandle(handle)
+
+    def is_game_pid(self, pid):
+        name = self.process_name(pid)
+        return name == "fczf.exe" if name else pid in self.game_pids()
 
     def client(self, game_only=True):
         hwnd = self.foreground()
         if not hwnd or not self.user.IsWindowVisible(hwnd) or self.user.IsIconic(hwnd):
             return None
         pid = self.pid(hwnd)
-        if not pid or (game_only and self.process_name(pid) != "fczf.exe"):
+        if not pid or (game_only and not self.is_game_pid(pid)):
             return None
         rect, origin = _Rect(), _Point()
         if not self.user.GetClientRect(hwnd, C.byref(rect)) or not self.user.ClientToScreen(hwnd, C.byref(origin)):
@@ -147,15 +182,17 @@ class _Win32:
             if self.user.IsWindowVisible(hwnd) and self.pid(hwnd) in pids:
                 rect = _Rect()
                 if self.user.GetClientRect(hwnd, C.byref(rect)):
-                    candidates.append((rect.right * rect.bottom, hwnd))
+                    minimized = bool(self.user.IsIconic(hwnd))
+                    if minimized or (rect.right >= 640 and rect.bottom >= 360):
+                        candidates.append((not minimized, rect.right * rect.bottom, hwnd))
             return True
 
         self.user.EnumWindows(visit, 0)
-        return max(candidates)[1] if candidates else None
+        return max(candidates)[-1] if candidates else None
 
     def activate(self, hwnd):
         if self.user.IsIconic(hwnd):
-            self.user.ShowWindow(hwnd, 9)  # SW_RESTORE
+            self.user.ShowWindowAsync(hwnd, 9)  # SW_RESTORE
         self.user.SetForegroundWindow(hwnd)
         return self.foreground() == hwnd
 
@@ -272,23 +309,42 @@ class WindowsGame:
     def foreground_game(self):
         return self._native.client() is not None
 
-    def _focus(self, maintenance):
+    def focus_game(self, on_wait=None):
+        """Explicit start: Windows may grant foreground asynchronously, or require a user click."""
         if self.foreground_game():
             return True
         hwnd = self._native.find_game_window()
         if not hwnd:
-            return False
-        if maintenance:
-            pid = self._native.pid(self._native.foreground())
-            if pid != os.getpid() and self._native.process_name(pid) != "nexonplug.exe":
-                return False
-        return self._native.activate(hwnd) and self.foreground_game()
-
-    def focus_game(self):
-        return self._focus(maintenance=False)
+            if self.game_present():
+                raise WindowUnavailable("FC 온라인은 실행 중이지만 표시 가능한 게임 창이 없습니다. 게임 화면이 열린 뒤 다시 시도하세요.")
+            raise WindowUnavailable("FC 온라인 프로세스(fczf.exe)가 확인되지 않았습니다. 게임 실행 상태를 확인하세요.")
+        pid = self._native.pid(hwnd)
+        deadline = time.monotonic() + 12
+        if self.stop_requested and self.stop_requested():
+            raise InterruptedError("창 전환 대기를 중지했습니다.")
+        self._native.activate(hwnd)
+        announced = False
+        while True:
+            if self.stop_requested and self.stop_requested():
+                raise InterruptedError("창 전환 대기를 중지했습니다.")
+            client = self._native.client()
+            if client and client.hwnd == hwnd and client.pid == pid:
+                return True
+            if time.monotonic() >= deadline:
+                raise WindowUnavailable(f"FC 온라인 게임 창(PID {pid})을 찾았으나 12초 안에 활성화하지 못했습니다. 게임 창을 직접 선택한 뒤 다시 시도하세요.")
+            if on_wait and not announced:
+                on_wait("FC 온라인 게임 창 전환 대기 중 · 12초 안에 게임 창을 직접 선택해도 됩니다.")
+                announced = True
+            time.sleep(0.1)
 
     def focus_game_for_maintenance(self):
-        return self._focus(maintenance=True)
+        if self.foreground_game():
+            return True
+        pid = self._native.pid(self._native.foreground())
+        if pid != os.getpid() and self._native.process_name(pid) != "nexonplug.exe":
+            return False
+        hwnd = self._native.find_game_window()
+        return bool(hwnd and self._native.activate(hwnd) and self.foreground_game())
 
     def _poll_one(self, name, vk):
         # The high bit covers a held key. The low bit can also catch a tap
