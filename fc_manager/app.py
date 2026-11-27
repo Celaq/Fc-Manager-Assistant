@@ -352,7 +352,7 @@ class Desktop:
     def show_notes(self):
         release = self.available_release
         notes = release.notes if release else (
-            "코치 모집에서 요청 특성의 이미지 점수가 낮고 다른 아이콘 하나가 뚜렷하게 앞설 때 발생하던 판독 시간 초과를 수정했습니다.")
+            "훈련코치 모집 중 후보 목록이 바뀌면 클릭을 보류하고 여섯 칸을 다시 확인합니다.")
         messagebox.showinfo("변경 내용", notes, parent=self.root)
 
     def check_update(self):

@@ -3,6 +3,7 @@ import json
 import tempfile
 import threading
 import unittest
+from itertools import cycle
 from pathlib import Path
 from unittest.mock import Mock, patch
 
@@ -101,19 +102,50 @@ class RecruitmentTests(unittest.TestCase):
         ctx.notify.assert_called_once()
         ctx.report.assert_not_called()
 
-    def test_unverified_dialog_or_changed_board_stops_before_payment(self):
+    def test_unverified_dialog_stops_before_payment(self):
         wrong = self.confirm.copy()
         wrong[180:212, 600:700] = 0
-        for after, expected, clicks in ((wrong, "확인창", [(781, 416)]), (None, "목록", [])):
-            with self.subTest(after=expected):
-                frames = [self.board]*3 + [after] if after is not None else [self.board]*2 + [self.empty]
-                result, actual, ctx = self.play(frames)
-                self.assertIn(expected, result)
-                self.assertEqual(actual, clicks)
-                path = ctx.report.call_args.args[1]
-                with Image.open(path) as im:
-                    self.assertEqual(im.size, (720, 428))
-                ctx.notify.assert_not_called()
+        result, clicks, ctx = self.play([self.board]*3 + [wrong])
+        self.assertIn("확인창", result)
+        self.assertEqual(clicks, [(781, 416)])
+        with Image.open(ctx.report.call_args.args[1]) as im:
+            self.assertEqual(im.size, (720, 428))
+        ctx.notify.assert_not_called()
+
+    def test_changed_board_is_rescanned_before_refresh_or_hire(self):
+        frames = [self.empty]*2 + [self.board]*3 + [self.confirm, self.success]
+        result, clicks, ctx = self.play(frames)
+        self.assertIn("고용 성공", result)
+        self.assertEqual(clicks, [(781, 416), (526, 389)])
+        ctx.notify.assert_called_once()
+        result, clicks, _ = self.play([self.board]*2 + [self.empty], limit=300)
+        self.assertIn("한도", result)
+        self.assertEqual(clicks, [])
+
+    def test_paid_refresh_returning_to_original_board_is_not_repeated(self):
+        result, clicks, _ = self.play([self.empty]*3 + [self.board, self.empty], limit=1000)
+        self.assertIn("후보 변경 미확인", result)
+        self.assertIn("사용 50 CP", result)
+        self.assertEqual(clicks, [(759, 479)])
+
+    def test_same_position_new_icons_replace_previous_hire_decision(self):
+        replacement = self.board.copy()
+        x, y = map(int, vision.board_center(self.card, 2))
+        region = replacement[y-12:y+13, x-12:x+13]
+        rng = np.random.default_rng(23)
+        region[:] = rng.integers(0, 256, (25, 25, 1))
+        catalog = dict(self.catalog)
+        catalog[39] = vision.glyph(vision.grayscale(replacement), self.card, 2)
+        result, clicks, _ = self.play([self.board]*2 + [replacement], catalog=catalog, limit=300)
+        self.assertIn("한도", result)
+        self.assertEqual(clicks, [])
+
+    def test_unstable_board_times_out_without_clicking(self):
+        result, clicks, ctx = self.play(cycle([self.board, self.empty]))
+        self.assertIn("시간 초과", result)
+        self.assertIn("C 아래", result)
+        self.assertEqual(clicks, [])
+        ctx.report.assert_called_once()
 
     def test_budget_cancellation_and_delayed_refresh(self):
         result, clicks, _ = self.play([self.empty], limit=349)

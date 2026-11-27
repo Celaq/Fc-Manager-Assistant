@@ -179,14 +179,16 @@ class _Recruitment:
         self.spent = 0
         self.board = None
         self.candidates = []
+        self.before_refresh = None
         self.selected = None
         self.diagnostic = None
 
-    def transition(self, stage, delay=0.25):
+    def transition(self, stage, delay=0.25, *, keep_deadline=False):
         self.stage = stage
-        self.wait_reason = ""
         now = time.monotonic()
-        self.deadline = now + 8
+        if not keep_deadline:
+            self.wait_reason = ""
+            self.deadline = now + 8
         self.next_tick = now + delay
 
     def click(self, x, y):
@@ -203,10 +205,11 @@ class _Recruitment:
                 self.wait_reason = f"후보 {CARDS[card]} 특성 아이콘 또는 빈 칸 미인식"
                 return
 
-        if (self.board is not None and present == self.candidates and
-                all(vision.same_card(self.board, gray, card) for card in present)):
-            self.wait_reason = "새로 모집 후 후보 변경 미확인"
-            return
+        if self.before_refresh is not None:
+            previous, cards = self.before_refresh
+            if present == cards and all(vision.same_card(previous, gray, card) for card in present):
+                self.wait_reason = "새로 모집 후 후보 변경 미확인"
+                return
 
         self.selected = None
         uncertain = []
@@ -222,17 +225,17 @@ class _Recruitment:
             self.wait_reason = "특성 이미지 구분 불가 · " + ", ".join(uncertain)
             return
         self.board, self.candidates = gray, present
-        self.transition("Decide")
+        self.transition("Decide", keep_deadline=self.stage == "Recheck")
 
     def tick_decide(self, frame, gray):
         for card in range(6):
-            if card in self.candidates:
-                same = (vision.card_state(frame, gray, self.templates, card) == "candidate"
-                        and vision.same_card(self.board, gray, card))
-            else:
-                same = vision.marker(frame, self.templates, "Empty", card)
-            if not same:
-                raise ValueError("후보 목록이 변경되었습니다.")
+            expected = "candidate" if card in self.candidates else "empty"
+            state = vision.card_state(frame, gray, self.templates, card)
+            if state != expected or (state == "candidate" and not vision.same_card(self.board, gray, card)):
+                self.selected = None
+                self.wait_reason = f"후보 {CARDS[card]} 목록 변경 감지 · 재판독 대기"
+                self.transition("Recheck", keep_deadline=True)
+                return
 
         if self.selected is not None:
             card, _ = self.selected
@@ -248,15 +251,17 @@ class _Recruitment:
             return f"새로 모집 후 고용할 CP 한도가 부족합니다. 사용 {self.spent} CP"
         issue = vision.refresh_issue(frame, self.templates)
         if issue:
-            if not self.wait_reason:
+            reason = f"새로 모집 버튼 판독 시간 초과 · {issue} 미확인"
+            if self.wait_reason != reason:
                 self.ctx.move(665, 452)
-            self.wait_reason = f"새로 모집 버튼 판독 시간 초과 · {issue} 미확인"
+            self.wait_reason = reason
             return
         for card in self.candidates:
             live = vision.read_slots(gray, card, self.catalog)
             if vision.combination(self.rows, live) != 0:
                 raise ValueError("새로 모집 직전 특성 재확인 결과가 달라졌습니다.")
         self.click(759, 479)
+        self.before_refresh = self.board, self.candidates
         self.spent += 50
         self.ctx.log(f"새로 모집 · 사용 {self.spent} / {self.limit} CP")
         self.transition("Board", 0.95)
@@ -294,7 +299,7 @@ class _Recruitment:
         if self.stage == "Prepare":
             self.ctx.move(665, 452)
             self.transition("Board", 0.45)
-        elif self.stage == "Board":
+        elif self.stage in ("Board", "Recheck"):
             self.tick_board(frame, vision.grayscale(frame))
         elif self.stage == "Decide":
             return self.tick_decide(frame, vision.grayscale(frame))
