@@ -1,10 +1,30 @@
 # FC Manager Assistant
 
-FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows PowerShell 프로그램입니다.
+FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 도우미입니다.
 
-저장된 훈련코치 화면을 Python에서 재현할 수 있습니다. [Python 판독기 사용법](coach_reader/README.md)
+## Windows Python 배포판 3.3.4
 
-## 최신 테스트 버전
+[Windows x64 Python 배포판 다운로드](https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_Python_v3.3.4_win64.zip)
+
+ZIP 전체를 **새 폴더**에 풀고 `Start_FC_Manager.cmd`를 실행하세요. Python, Tk와 화면 인식 라이브러리를 포함합니다. 배포판의 **업데이트 확인** 버튼에서 Python 배포 채널을 조회합니다.
+
+- **감독모드**에서 일반·주차 모드, 시작점수 판독, 판수 제한, 이번 판 후 중지, 일별 전적과 승급·강등 알림을 사용할 수 있습니다. 단축키는 시작 F9, 이번 판 후 중지 F8, 중지 F12입니다.
+- **훈련코치**에서 최대 7개 조합과 CP 한도를 설정합니다. 원하는 코치를 고용한 뒤 개인 Discord 웹훅으로 알립니다. **BP 강화 보호 100%**는 보호 확률과 유지 옵션을 설정합니다. 실제 선수 강화는 게임에서 직접 실행합니다.
+- **자동 시작**에서 점검 종료 시각을 한국 시간으로 예약합니다. 기존 3.3.4와 같이 넥슨플러그 로그인과 게임 접속 시 필요한 인증은 사용자가 진행합니다.
+- **Discord 알림**에서 개인 웹훅, 운영자 오류 보고, 기존 Mac 서버의 계정별 원격 조작을 설정할 수 있습니다. Windows 현 사용자 계정의 암호화된 연결 정보를 읽습니다.
+- 기존 `FC_Manager_v3.3.4`와 Python 설치 폴더를 나란히 두면 첫 실행 시 설정, 전적, 코치 조합, 아이콘 캐시와 Discord 연결을 가져옵니다. 다른 위치라면 **이전 설정 가져오기**에서 예전 폴더를 선택하세요. 이미 있는 파일은 보존합니다.
+
+점수·등급 OCR에는 해당 Windows 언어의 OCR 기능이 필요합니다. Windows 게임과 넥슨플러그 실사용, 실제 Discord 알림 수신은 별도 확인 대상입니다.
+
+개발 환경에서 Windows 배포본을 빌드하려면 Python 3.11 이상으로 저장소 루트에서 다음 명령을 실행합니다. 빌더가 고정된 런타임과 Windows 패키지의 SHA-256을 확인하고 ZIP과 Python 전용 업데이트 정보를 생성합니다.
+
+```sh
+python packaging/build_windows.py --output dist
+```
+
+저장된 훈련코치 화면도 따로 재현할 수 있습니다. [Python 판독기 사용법](coach_reader/README.md)
+
+## PowerShell 배포판 및 이전 변경 내역
 
 **Windows 도우미 v3.3.4 훈련코치 모집**
 

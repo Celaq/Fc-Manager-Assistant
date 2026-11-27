@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "channel": "python-windows-x64",
+  "version": "3.3.4",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_Python_v3.3.4_win64.zip",
+  "sha256": "1c72c40b4e2796b5e79319c64e01afd7fc3b2fbcf888e16990cbfa0c340368dc",
+  "notes": "FC Manager 3.3.4 Python Windows 배포판"
+}

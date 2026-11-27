@@ -1,0 +1,66 @@
+{
+  "comtypes-1.4.13-py3-none-any.whl": {
+    "url": "https://files.pythonhosted.org/packages/66/95/f30c80615fda0d3c0ee6493ac9db61183313b43499b62dec136773b0e870/comtypes-1.4.13-py3-none-any.whl",
+    "sha256": "21546210748ba52e839e52112124b16ffab7d7fb68096493165fbc249e9023ad"
+  },
+  "numpy-2.3.5-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/2d/57/8aeaf160312f7f489dea47ab61e430b5cb051f59a98ae68b7133ce8fa06a/numpy-2.3.5-cp312-cp312-win_amd64.whl",
+    "sha256": "86945f2ee6d10cdfd67bcb4069c1662dd711f7e2a4343db5cecec06b87cf31aa"
+  },
+  "opencv_python_headless-4.13.0.92-cp37-abi3-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/4a/90/b338326131ccb2aaa3c2c85d00f41822c0050139a4bfe723cfd95455bd2d/opencv_python_headless-4.13.0.92-cp37-abi3-win_amd64.whl",
+    "sha256": "77a82fe35ddcec0f62c15f2ba8a12ecc2ed4207c17b0902c7a3151ae29f37fb6"
+  },
+  "pillow-12.2.0-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/5d/7b/25a221d2c761c6a8ae21bfa3874988ff2583e19cf8a27bf2fee358df7942/pillow-12.2.0-cp312-cp312-win_amd64.whl",
+    "sha256": "7f84204dee22a783350679a0333981df803dac21a0190d706a50475e361c93f5"
+  },
+  "psutil-7.2.2-cp37-abi3-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/b4/90/e2159492b5426be0c1fef7acba807a03511f97c5f86b3caeda6ad92351a7/psutil-7.2.2-cp37-abi3-win_amd64.whl",
+    "sha256": "eb7e81434c8d223ec4a219b5fc1c47d0417b12be7ea866e24fb5ad6e84b3d988"
+  },
+  "pywin32-311-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/d1/a8/a0e8d07d4d051ec7502cd58b291ec98dcc0c3fff027caad0470b72cfcc2f/pywin32-311-cp312-cp312-win_amd64.whl",
+    "sha256": "b8c095edad5c211ff31c05223658e71bf7116daa0ecf3ad85f3201ea3190d067"
+  },
+  "pywinauto-0.6.9-py2.py3-none-any.whl": {
+    "url": "https://files.pythonhosted.org/packages/44/46/f2283648e0c237af451dc50ebc42121abfd198d12391fd9ad4df1c6b97d2/pywinauto-0.6.9-py2.py3-none-any.whl",
+    "sha256": "5924b3072864a1d730c5546bbeb17cf4063ba518b618dbc5e43c18276c7c9356"
+  },
+  "six-1.17.0-py2.py3-none-any.whl": {
+    "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+    "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"
+  },
+  "typing_extensions-4.15.0-py3-none-any.whl": {
+    "url": "https://files.pythonhosted.org/packages/18/67/36e9267722cc04a6b9f15c7f3441c2363321a3ea07da7ae0c0707beb2a9c/typing_extensions-4.15.0-py3-none-any.whl",
+    "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"
+  },
+  "winrt_runtime-3.2.1-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/ca/a1/1d7248d5c62ccbea5f3e0da64ca4529ce99c639c3be2485b6ed709f5c740/winrt_runtime-3.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "06510db215d4f0dc45c00fbb1251c6544e91742a0ad928011db33b30677e1576"
+  },
+  "winrt_windows_foundation-3.2.1-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/9b/5e/b5059e4ece095351c496c9499783130c302d25e353c18031d5231b1b3b3c/winrt_windows_foundation-3.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "45550c5b6c2125cde495c409633e6b1ea5aa1677724e3b95eb8140bfccbe30c9"
+  },
+  "winrt_windows_foundation_collections-3.2.1-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/37/94/5b888713e472746635a382e523513ab1b8200af55c5b56bc70e1e4369115/winrt_windows_foundation_collections-3.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "550dfb8c82fe74d9e0728a2a16a9175cc9e34ca2b8ef758d69b2a398894b698b"
+  },
+  "winrt_windows_globalization-3.2.1-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/69/da/8da1e5dc502e08e3a6d9de08712714310ef1780d25c762198e8e3b49a3fd/winrt_windows_globalization-3.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "fa4dbf6b18586e435bdd5d40b8536fe1dfd95810a264a135d121b34e33d39aa5"
+  },
+  "winrt_windows_graphics_imaging-3.2.1-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/3a/10/8cce4bffff8cad606623ea27adf711a0662881f2bca6207f12fd391d5eb8/winrt_windows_graphics_imaging-3.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "066038a96df12c23d6da6a591472436ada50103f575d8a1f802778a044f668c8"
+  },
+  "winrt_windows_media_ocr-3.2.1-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/28/34/33d90b4856517801c23c932940a9e307e5ceab14ca2747d4e5da846b142b/winrt_windows_media_ocr-3.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "9984824864b49eb65765f60ea9d910928888efe3cdf5f71f037d6fe9133134f6"
+  },
+  "winrt_windows_storage_streams-3.2.1-cp312-cp312-win_amd64.whl": {
+    "url": "https://files.pythonhosted.org/packages/c6/2f/cc36f475f8af293f40e2c2a5d6c2e75a189c2c2d4d01ecb3551578518c79/winrt_windows_storage_streams-3.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "e4508ee135af53e4fc142876abbf4bc7c2a95edfc7d19f52b291a8499cacd6dc"
+  }
+}

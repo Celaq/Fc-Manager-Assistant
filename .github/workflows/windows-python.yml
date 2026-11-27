@@ -1,0 +1,19 @@
+name: Verify portable Windows Python package
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build portable ZIP and exercise its bundled runtime
+        run: |
+          python packaging/build_windows.py --cache "$env:RUNNER_TEMP/cache" --output "$env:RUNNER_TEMP/dist"
+          python packaging/verify_windows.py "$env:RUNNER_TEMP/dist"
