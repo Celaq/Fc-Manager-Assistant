@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.9",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.9_BP_Protection_Beta.zip",
-  "sha256": "6a40579db6da8cbc5053ae1bb8f815ce9f22ead55cab09d7f0735473dc95f5e3",
-  "notes": "선수 강화 준비 화면에서 BP 강화 보호를 100%로 설정하고, 확률 값 유지와 보호 적용을 확인하는 버튼을 추가했습니다."
+  "version": "3.2.11",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.11_Coach_Recruit_Beta.zip",
+  "sha256": "e7c0be7329fbb39cd192990d705db749ab17661122a881651453b8c206fe82d3",
+  "notes": "훈련코치 특성 조합을 최대 4개 저장하고, 설정한 CP 한도에서 조건에 맞는 코치 1명의 모집과 고용을 진행합니다."
 }
