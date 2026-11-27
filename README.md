@@ -2,6 +2,8 @@
 
 FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows PowerShell 프로그램입니다.
 
+저장된 훈련코치 화면을 Python에서 재현할 수 있습니다. [Python 판독기 사용법](coach_reader/README.md)
+
 ## 최신 테스트 버전
 
 **Windows 도우미 v3.3.4 훈련코치 모집**
