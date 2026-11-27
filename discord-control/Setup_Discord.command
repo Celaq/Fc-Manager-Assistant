@@ -16,7 +16,7 @@ if ! command -v cloudflared >/dev/null; then
         if ! command -v cloudflared >/dev/null; then node install-tunnel.mjs "$bin_dir"; fi
     fi
 fi
-echo 'Discord Developer Portal → 이 프로젝트의 앱 → Bot 메뉴의 토큰을 입력하세요.'
+echo '이 프로젝트의 기존 봇 토큰을 입력하세요. 토큰은 Mac에 저장되지 않습니다.'
 IFS= read -r -s -p '봇 토큰 (입력 숨김): ' token
 echo
 webhook=''

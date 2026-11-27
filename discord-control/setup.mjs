@@ -1,18 +1,15 @@
 import {spawn} from 'node:child_process';
 import {randomUUID} from 'node:crypto';
-import {existsSync, mkdirSync, readFileSync, writeFileSync, renameSync} from 'node:fs';
+import {mkdirSync} from 'node:fs';
 import {createServer} from 'node:http';
-import {homedir} from 'node:os';
+import {askLocal, dataDir, loadConfig, saveConfig} from './mac-config.mjs';
 import {join} from 'node:path';
 import {createInterface} from 'node:readline';
 import {setTimeout as delay} from 'node:timers/promises';
 import {parseEnv} from 'node:util';
 import {createRelay} from './server.mjs';
 
-const dataDir=join(homedir(),'Library/Application Support/FC Manager Discord');
-const desktopConfig=join(homedir(),'Desktop/discord-control/server.env');
-const configFile=existsSync(desktopConfig) ? desktopConfig : join(dataDir,'server.env');
-const configText=readFileSync(existsSync(configFile) ? configFile : new URL('./server.env.example',import.meta.url),'utf8');
+const configText=await loadConfig();
 const config=parseEnv(configText);
 const [token, webhook='']=(await Array.fromAsync(process.stdin)).join('').trimEnd().split(/\r?\n/).map(line=>line.trim());
 if (webhook && !/^https:\/\/discord\.com\/api\/webhooks\/\d{17,20}\/[\w.-]+$/.test(webhook)) throw Error('운영자 채널의 Discord 웹훅 주소를 확인하세요.');
@@ -129,7 +126,11 @@ async function run() {
     if (config.DISCORD_APPLICATION_ID && config.DISCORD_APPLICATION_ID!==app.id) throw Error('기존 설정의 앱과 입력한 토큰의 앱이 다릅니다.');
     const previous=app.interactions_endpoint_url;
     if (previous && (!/^https:\/\/[\w-]+\.trycloudflare\.com$/.test(config.PUBLIC_ORIGIN) || previous!==config.PUBLIC_ORIGIN+'/discord')) {
-        throw Error('이 앱에는 이미 다른 Interactions Endpoint가 설정돼 있습니다. 전용 Discord 앱의 토큰을 사용하세요.');
+        const recoverable=/^https:\/\/[a-z0-9-]+\.trycloudflare\.com\/discord$/.test(previous) &&
+            (!config.PUBLIC_ORIGIN || config.PUBLIC_ORIGIN==='https://fc.example.com' ||
+             (config.DISCORD_APPLICATION_ID===app.id && /^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/.test(config.PUBLIC_ORIGIN)));
+        if (!recoverable || await askLocal('앱 '+app.id+'의 기존 임시 주소 '+previous+'를 이 Mac의 새 주소로 바꿀까요? (변경하려면 YES) ')!=='YES')
+            throw Error('기존 Discord 엔드포인트를 유지했습니다. 이전 설정 파일을 확인하세요.');
     }
     mkdirSync(dataDir,{recursive:true,mode:0o700});
     // Reserve the origin port before exposing it. Only this relay can receive requests.
@@ -157,8 +158,7 @@ async function run() {
         const line=new RegExp('^'+key+'=.*$','gm');
         text=line.test(text) ? text.replace(line,key+'='+value) : text+'\n'+key+'='+value+'\n';
     }
-    const tmp=configFile+'.'+randomUUID();
-    writeFileSync(tmp,text,{mode:0o600,flag:'wx'});renameSync(tmp,configFile);
+    saveConfig(text,configText);
     await new Promise((resolve,reject)=>{
         const child=spawn(process.execPath,['register.mjs'],{stdio:'inherit',env:{...process.env,
             DISCORD_APPLICATION_ID:app.id, DISCORD_GUILD_ID:config.DISCORD_GUILD_ID || '', DISCORD_BOT_TOKEN:token}});

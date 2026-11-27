@@ -2,6 +2,12 @@
 
 서버 운영자가 Discord 앱 하나와 HTTPS 주소 하나를 설정하면 여러 사용자가 같은 봇을 쓸 수 있습니다. 각 PC는 바깥으로 HTTPS 요청을 보내므로 사용자 PC에 포트를 열 필요가 없습니다.
 
+## 설정 복구와 업데이트
+
+Mac 서버 v3.3.3부터 두 실행 파일이 `~/Library/Application Support/FC Manager Discord/server.env`를 함께 사용합니다. 이 폴더에는 연결 데이터베이스 `control.sqlite`도 있습니다. 새 ZIP은 별도 폴더에 압축을 풀어 실행하세요. 기존 설치 폴더는 연결 확인 후 정리할 수 있습니다.
+
+저장된 설정이 없으면 실행 파일 옆과 바탕화면·다운로드의 기존 FC Manager 서버 폴더에서 `server.env`를 찾습니다. 설정이 서로 다르면 터미널에서 경로를 보고 하나를 선택합니다. 다른 위치에 보관한 설정은 새 실행 파일 옆에 복사해도 됩니다. 설정 변경 직전의 값은 같은 보관 폴더의 `server.env.bak`에 보관됩니다. 봇 토큰은 실행 시 Mac에서 입력합니다.
+
 ## 임시 HTTPS 주소를 쓰는 Mac
 
 기존 서버를 종료하고 새 ZIP의 **Setup_Discord.command**를 실행하세요. Mac에서 봇 토큰을 입력하고, 처음 오류 채널을 설정할 때 운영자 전용 채널의 웹훅 URL을 입력합니다. 웹훅 입력에서 Enter를 누르면 기존 값을 유지합니다. 설치 파일이 터널을 연결하고 Discord 엔드포인트를 확인한 뒤 명령을 등록합니다. 터미널은 열어 두세요. 터널이 재시작돼 임시 주소가 변경되면 Discord에서 새 `/연결` 링크를 받아 Windows 도우미에 입력하세요.
@@ -9,7 +15,7 @@
 ## 고정 HTTPS 주소로 맥에서 시작하기
 
 1. 맥에 Node.js 24를 설치합니다. Homebrew를 사용하면 `brew install node@24`로 설치할 수 있습니다. 별도의 npm 패키지는 필요하지 않습니다.
-2. ZIP을 풀고 **Start_Discord_Server.command**를 한 번 실행합니다. 같은 폴더에 생성된 **server.env**를 텍스트 편집기로 열어 Discord Application ID, Public Key, 공개 HTTPS 주소를 입력합니다. 테스트할 Discord 서버 ID도 입력하면 해당 서버에 명령을 등록할 수 있습니다.
+2. ZIP을 풀고 **Start_Discord_Server.command**를 한 번 실행합니다. 터미널에 경로가 표시된 **server.env**를 텍스트 편집기로 열어 Discord Application ID, Public Key, 공개 HTTPS 주소를 입력합니다. 테스트할 Discord 서버 ID도 입력하면 해당 서버에 명령을 등록할 수 있습니다.
 3. **Start_Discord_Server.command**를 다시 실행하고 터미널 창을 열어 둡니다. 계정 연결 정보는 `~/Library/Application Support/FC Manager Discord/control.sqlite`에 저장됩니다. 맥이 잠자기 상태면 원격 조작을 사용할 수 없습니다.
 4. 아래 **운영자 설정**의 1, 3, 4단계를 따라 Discord 앱을 서버에 추가하고 공개 HTTPS 주소를 맥의 `127.0.0.1:3000`에 연결합니다. Discord와 사용자 PC 양쪽에서 같은 주소에 접근할 수 있어야 합니다.
 5. 별도 터미널에서 압축을 푼 폴더로 이동한 뒤 `./Start_Discord_Server.command register`를 실행합니다. 프롬프트에 봇 토큰을 입력하면 명령이 등록됩니다. 토큰은 파일에 저장되지 않습니다.

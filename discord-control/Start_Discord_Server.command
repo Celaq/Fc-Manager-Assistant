@@ -9,22 +9,13 @@ if ! command -v node >/dev/null || ! node -e "require('node:sqlite'); if (+proce
     echo 'Node.js 24가 필요합니다. Homebrew 사용 시 brew install node@24 를 실행하세요.' >&2
     exit 1
 fi
-if [[ ! -f server.env ]]; then
-    cp server.env.example server.env
-    echo "설정 파일을 만들었습니다. 다음 파일의 값을 입력한 뒤 다시 실행하세요."
-    echo "$PWD/server.env"
-    exit 1
-fi
+config_file="$(node mac-config.mjs)"
 
 case "${1:-start}" in
     start)
-        if [[ -z "${DATABASE_PATH:-}" ]]; then
-            data_dir="$HOME/Library/Application Support/FC Manager Discord"
-            mkdir -p "$data_dir"
-            export DATABASE_PATH="$data_dir/control.sqlite"
-        fi
+        export FC_MAC_DEFAULT_DB="$HOME/Library/Application Support/FC Manager Discord/control.sqlite"
         echo "서버 시작 · 종료하려면 Control+C를 누르세요."
-        exec node --env-file=server.env server.mjs
+        exec node --env-file="$config_file" server.mjs
         ;;
     register)
         if [[ -z "${DISCORD_BOT_TOKEN:-}" ]]; then
@@ -32,7 +23,7 @@ case "${1:-start}" in
             echo
             export DISCORD_BOT_TOKEN
         fi
-        exec node --env-file=server.env register.mjs --verify-endpoint
+        exec node --env-file="$config_file" register.mjs --verify-endpoint
         ;;
     *)
         echo '사용법: ./Start_Discord_Server.command [start|register]' >&2

@@ -157,6 +157,6 @@ export function createRelay({database, applicationId, publicKey, origin, diagnos
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const server = createRelay({origin:process.env.PUBLIC_ORIGIN,applicationId:process.env.DISCORD_APPLICATION_ID,
     diagnosticWebhook:process.env.OPERATOR_DIAGNOSTIC_WEBHOOK,
-    publicKey:process.env.DISCORD_PUBLIC_KEY,database:process.env.DATABASE_PATH || 'discord-control.sqlite'});
+    publicKey:process.env.DISCORD_PUBLIC_KEY,database:process.env.DATABASE_PATH || process.env.FC_MAC_DEFAULT_DB || 'discord-control.sqlite'});
   server.listen(Number(process.env.PORT || 3000),process.env.HOST || '127.0.0.1');
 }

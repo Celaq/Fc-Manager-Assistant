@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,statSync,rmSync,unlinkSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {parseEnv} from 'node:util';
+
+test('Mac setup migrates a populated sibling config, preserves the database and recovers its backup', async t=>{
+  const originalHome=process.env.HOME;
+  const home=mkdtempSync(join(tmpdir(),'fc-config-'));process.env.HOME=home;
+  t.after(()=>{process.env.HOME=originalHome;rmSync(home,{recursive:true,force:true});});
+  const {loadConfig,saveConfig,configFile,dataDir}=await import('./mac-config.mjs');
+  const old=join(home,'Downloads/discord-control 2'),blank=join(home,'Desktop/discord-control');
+  for(const dir of [old,blank,dataDir])mkdirSync(dir,{recursive:true});
+  writeFileSync(join(blank,'server.env'),'PUBLIC_ORIGIN=https://fc.example.com\n');
+  const data='DISCORD_APPLICATION_ID=100000000000000001\nDISCORD_PUBLIC_KEY='+'1'.repeat(64)+'\nPUBLIC_ORIGIN=https://first.example\nOPERATOR_DIAGNOSTIC_WEBHOOK=https://example.test/private\n';
+  writeFileSync(join(old,'server.env'),data+'NODE_OPTIONS=should-not-import\n');
+  writeFileSync(join(dataDir,'control.sqlite'),'preserve');
+  const first=await loadConfig();
+  assert.deepEqual({...parseEnv(first)},{...parseEnv(data)});
+  assert.equal(statSync(configFile).mode&0o777,0o600);
+  assert.equal(readFileSync(join(old,'server.env'),'utf8'),data+'NODE_OPTIONS=should-not-import\n');
+  const second=first.replace('first.example','second.example');
+  saveConfig(second,first);assert.equal(readFileSync(configFile+'.bak','utf8'),first);
+  assert.equal(await loadConfig(),second);
+  unlinkSync(configFile);unlinkSync(join(old,'server.env'));
+  assert.equal(await loadConfig(),first);
+  assert.equal(readFileSync(join(dataDir,'control.sqlite'),'utf8'),'preserve');
+  unlinkSync(configFile);
+  writeFileSync(join(old,'server.env'),second);
+  await assert.rejects(loadConfig(()=> 'invalid'),/변경하지/);
+  assert.equal(await loadConfig(()=> '2'),second);
+});
