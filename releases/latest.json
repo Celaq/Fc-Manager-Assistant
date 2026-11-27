@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.3.0",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.3.0_Coach_Recognition_Beta.zip",
-  "sha256": "5b6ba2a39364a556e36b017d7d199e81eff79a6de7937b9175c2c812bda3fd1e",
-  "notes": "훈련코치 특성 아이콘의 위치·크기 차이를 보정합니다. 일부 특성을 읽지 못해도 다른 후보까지 검사하며, 원하는 조합일 가능성이 남아 있으면 새로 모집하기 전에 멈춥니다."
+  "version": "3.3.1",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.3.1_Coach_Grid_Beta.zip",
+  "sha256": "5a1bab892a939515d4a0b177a77871a415b0c96e05a3f868321330855b181fbf",
+  "notes": "훈련코치 모집에서 A·B·C열 위아래의 최대 여섯 후보를 판독합니다. 선택한 칸의 고용 비용과 확인창의 특성을 확인한 뒤 고용합니다."
 }
