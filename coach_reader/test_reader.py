@@ -78,6 +78,24 @@ class CoachReplayTests(unittest.TestCase):
         self.assertEqual(vision.combination([[12, 41, 42]], slots), 0)
         self.assertEqual(vision.combination([[19, 17, 44]], slots), 0)
 
+    def test_reported_row_five_excludes_dissimilar_requested_traits(self):
+        wanted = [28, 30, 42]
+        rows = [[] for _ in range(4)] + [wanted]
+        scores = {38:.72, 48:.35, 28:.16, 30:.26, 42:.15}
+        weak = vision.Slot.from_scores(scores)
+        self.assertIsNone(weak.confirmed)
+        for missing in wanted:
+            known = [vision.Slot.from_scores({t:.95}) for t in wanted if t != missing]
+            with self.subTest(missing=missing):
+                self.assertEqual(vision.combination(rows, known + [weak]), 0)
+                self.assertEqual(vision.combination([[38]], known + [weak]), -1)
+
+    def test_weak_inconclusive_reading_preserves_possible_match(self):
+        for scores in ({38:.50, 48:.25, 42:.15}, {38:.72, 48:.68, 42:.15},
+                       {38:.72, 42:.52}, {38:.72, 48:.35}, {42:0, 38:0}):
+            with self.subTest(scores=scores):
+                self.assertEqual(vision.combination([[42]], [vision.Slot.from_scores(scores)]), -1)
+
     def test_refresh_150_and_missing_currency(self):
         frame = self.make_board()
         frame[475:484, 781:783] = 10

@@ -177,6 +177,7 @@ def card_state(frame, gray, templates, card):
 class Slot:
     scores: dict
     confirmed: int | None
+    isolated_weak_leader: bool = False
 
     @classmethod
     def from_scores(cls, scores):
@@ -184,11 +185,16 @@ class Slot:
         best = ordered[0]
         runner = scores[ordered[1]] if len(ordered) > 1 else 0
         confirmed = best if scores[best] >= 0.78 and scores[best]-runner >= 0.055 else None
-        return cls(scores, confirmed)
+        isolated = (confirmed is None and len(ordered) >= 2
+                    and scores[best] >= 0.70 and scores[best]-runner >= 0.30)
+        return cls(scores, confirmed, isolated)
 
     def could_be(self, trait):
         if self.confirmed is not None:
             return self.confirmed == trait
+        if self.isolated_weak_leader:
+            # A distant, measured alternative can be ruled out even when the winner cannot authorize a hire.
+            return trait not in self.scores or self.scores[trait] >= 0.30
         return max(self.scores.values()) < 0.85 or self.scores.get(trait, 0) >= 0.60
 
 

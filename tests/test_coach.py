@@ -141,6 +141,20 @@ class RecruitmentTests(unittest.TestCase):
         self.assertIn("가격 숫자 50", result)
         self.assertEqual(clicks, [])
 
+    def test_reported_row_five_rechecked_before_refresh(self):
+        self.rows = [[], [], [], [], [28, 30, 42], [], []]
+        known = [vision.Slot.from_scores({t:.94}) for t in (28, 30)]
+        excluded = known + [vision.Slot.from_scores({38:.72, 48:.35, 28:.16, 30:.26, 42:.15})]
+        plausible = known + [vision.Slot.from_scores({38:.72, 42:.60})]
+        for second, expected_clicks, message in (
+                (excluded, [(759, 479)], "사용 50 CP"),
+                (plausible, [], "재확인 결과가 달라졌습니다")):
+            with self.subTest(message=message), patch.object(vision, "read_slots", side_effect=[excluded, second]):
+                result, clicks, ctx = self.play([self.board])
+                self.assertIn(message, result)
+                self.assertEqual(clicks, expected_clicks)
+                ctx.notify.assert_not_called()
+
 
 class PreferencesCatalogTests(unittest.TestCase):
     def test_legacy_bom_preset_and_seven_row_roundtrip(self):

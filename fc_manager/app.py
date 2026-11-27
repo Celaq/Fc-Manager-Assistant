@@ -352,7 +352,7 @@ class Desktop:
     def show_notes(self):
         release = self.available_release
         notes = release.notes if release else (
-            "게임 창을 찾는 방법을 개선하고, 게임이 실행 중일 때 창 전환을 최대 12초간 기다립니다.")
+            "코치 모집에서 요청 특성의 이미지 점수가 낮고 다른 아이콘 하나가 뚜렷하게 앞설 때 발생하던 판독 시간 초과를 수정했습니다.")
         messagebox.showinfo("변경 내용", notes, parent=self.root)
 
     def check_update(self):
