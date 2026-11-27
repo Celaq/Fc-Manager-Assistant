@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.13",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.13_Coach_Images_Beta.zip",
-  "sha256": "6ea3f9d620b4abe182af0d9bc47278a4e5ac22741de2b3304cd14af3dd44335d",
-  "notes": "훈련코치 이름 OCR을 이미지 비교로 교체하고, 맥 서버 운영자 Discord 웹훅으로 오류 자료를 자동 전송하는 옵션을 추가했습니다."
+  "version": "3.3.0",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.3.0_Coach_Recognition_Beta.zip",
+  "sha256": "5b6ba2a39364a556e36b017d7d199e81eff79a6de7937b9175c2c812bda3fd1e",
+  "notes": "훈련코치 특성 아이콘의 위치·크기 차이를 보정합니다. 일부 특성을 읽지 못해도 다른 후보까지 검사하며, 원하는 조합일 가능성이 남아 있으면 새로 모집하기 전에 멈춥니다."
 }

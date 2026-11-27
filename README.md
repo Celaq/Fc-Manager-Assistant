@@ -4,7 +4,14 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.2.13 훈련코치 이미지 비교 및 운영자 오류 보고**
+**v3.3.0 훈련코치 특성 이미지 판독 수정**
+
+[Windows 도우미](releases/FC_Manager_v3.3.0_Coach_Recognition_Beta.zip) · [맥용 운영 서버](releases/FC_Manager_Discord_Server_v3.2.13.zip)
+
+- 모집 목록에서 아이콘의 위치와 크기를 조금씩 바꿔 기준 이미지와 대조합니다. 한 후보의 일부 특성이 모호해도 나머지 후보를 검사하고, 선택한 조합이 확인된 후보는 고용 단계로 넘어갑니다.
+- 확정된 조합이 없고 읽지 못한 칸에 원하는 특성이 있을 수 있으면 새로 모집하기 전에 멈춥니다. 이때 실행 기록에 판독 위치(예: A1은 A 후보의 첫 특성), 가장 비슷한 두 기준 이미지의 ID와 유사도가 표시됩니다.
+
+### v3.2.13 훈련코치 이미지 비교 및 운영자 오류 보고
 
 [Windows 도우미](releases/FC_Manager_v3.2.13_Coach_Images_Beta.zip) · [맥용 운영 서버](releases/FC_Manager_Discord_Server_v3.2.13.zip)
 
