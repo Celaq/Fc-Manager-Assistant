@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.11",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.11_Coach_Recruit_Beta.zip",
-  "sha256": "e7c0be7329fbb39cd192990d705db749ab17661122a881651453b8c206fe82d3",
-  "notes": "훈련코치 특성 조합을 최대 4개 저장하고, 설정한 CP 한도에서 조건에 맞는 코치 1명의 모집과 고용을 진행합니다."
+  "version": "3.2.12",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.12_Coach_Board_Fix.zip",
+  "sha256": "b2e0fc3f50ae5c9b23f9a4914700e855d11a57107f53baa3dbef23bf523ec24e",
+  "notes": "훈련코치 모집 시작 직후 비용 표시를 읽지 못해 후보 판독이 멈추는 문제를 수정했습니다. CP는 해당 버튼의 비용 확인 후 사용합니다."
 }
