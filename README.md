@@ -4,7 +4,14 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**Mac 서버 v3.3.3 설정 복구 · Windows 도우미 v3.3.2**
+**Windows 도우미 v3.3.3 훈련코치 조합 판독**
+
+[Windows 도우미](releases/FC_Manager_v3.3.3_Coach_Combination_Beta.zip) · [Mac 서버](releases/FC_Manager_Discord_Server_v3.3.3.zip)
+
+- 비슷한 이미지가 여러 개면 기준 아이콘 전체의 점수와 저장된 조합을 대조합니다. 조합에 필요한 각 특성을 서로 다른 칸에 배정할 수 있는지 확인합니다.
+- 가능한 조합이 남으면 CP 사용을 보류합니다. 새로 모집 직전에 한 번 더 판독하고, 시간 초과 진단에는 가능한 조합 번호와 요청 특성의 점수를 기록합니다.
+
+### Mac 서버 v3.3.3 설정 복구
 
 [Windows 도우미](releases/FC_Manager_v3.3.2_Error_Upload_Beta.zip) · [Mac 서버 설정 복구판](releases/FC_Manager_Discord_Server_v3.3.3.zip)
 
