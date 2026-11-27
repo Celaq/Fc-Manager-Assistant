@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { generateKeyPairSync, sign } from 'node:crypto';
 import { once } from 'node:events';
-import { createRelay } from './server.mjs';
+import { commands, createRelay } from './server.mjs';
 
 test('two Discord accounts in one guild only control their own active PC', async t => {
   const {privateKey,publicKey} = generateKeyPairSync('ed25519');
@@ -63,6 +63,26 @@ test('two Discord accounts in one guild only control their own active PC', async
   assert.match(await slash(alice,'시작'),/오프라인/);
   await poll(a,s1);
   await poll(b,s2);
+  assert.ok(commands['오류업로드']);
+  const uploadEvent = evt(alice,'오류업로드');
+  const receipt = (await (await discord(uploadEvent)).json()).data;
+  assert.equal(receipt.flags,64);
+  assert.match(receipt.content,/접수/);
+  assert.match((await (await discord(uploadEvent)).json()).data.content,/이미/);
+  assert.equal((await (await poll(b,s2)).json()).command,null);
+  const upload = (await (await poll(a,s1)).json()).command;
+  assert.equal(upload.name,'upload-error');
+  assert.equal(upload.id,uploadEvent.id);
+  await poll(a,s1,{ack:upload.id,result:'오류 자료 요청 수신'});
+  time += 16000;
+  const manualReport = {...incident,id:'c'.repeat(32)};
+  assert.equal((await deliver(a,manualReport)).status,200);
+  assert.equal((await deliver(a,manualReport)).status,200);
+  assert.equal(reports.length,2);
+  await poll(a,s1,{status:'오류업로드 · 운영자 Discord에 전송 완료'});
+  await poll(b,s2);
+  assert.match(await slash(alice,'상태'),/전송 완료/);
+  assert.doesNotMatch(await slash(bob,'상태'),/전송 완료/);
   const start = evt(alice,'시작');
   const accepted = await (await discord(start)).json();
   assert.equal(accepted.data.flags,64);

@@ -4,7 +4,15 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.3.1 훈련코치 모집 두 줄 지원**
+**v3.3.2 Discord 오류 자료 업로드**
+
+[Windows 도우미](releases/FC_Manager_v3.3.2_Error_Upload_Beta.zip) · [Mac 봇 서버](releases/FC_Manager_Discord_Server_v3.3.2.zip)
+
+- Discord에서 `/오류업로드`를 실행하면 본인 PC의 최근 오류 자료를 운영자 전용 채널로 한 번 전송합니다. `/상태`에서 전송 결과를 확인할 수 있습니다.
+- Windows 도우미는 중계 서버에서 HTTP 530을 받으면 연결을 유지하고 재시도합니다. Mac 터널의 임시 주소가 바뀌었다면 같은 Discord 계정의 새 `/연결` 링크를 Windows 도우미에 입력하세요.
+- Mac 서버도 업데이트하고 새 명령을 등록해야 합니다. [Mac 실행 및 웹훅 설정](discord-control/README.md)
+
+### v3.3.1 훈련코치 모집 두 줄 지원
 
 [Windows 도우미](releases/FC_Manager_v3.3.1_Coach_Grid_Beta.zip) · [맥용 운영 서버](releases/FC_Manager_Discord_Server_v3.2.13.zip)
 

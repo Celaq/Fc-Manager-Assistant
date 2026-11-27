@@ -32,7 +32,7 @@ case "${1:-start}" in
             echo
             export DISCORD_BOT_TOKEN
         fi
-        exec node --env-file=server.env register.mjs
+        exec node --env-file=server.env register.mjs --verify-endpoint
         ;;
     *)
         echo '사용법: ./Start_Discord_Server.command [start|register]' >&2

@@ -9,6 +9,7 @@ export const commands = {
   '연결': '내 PC의 도우미에 입력할 개인 연결 링크를 받습니다.',
   '연결해제': '내 PC와의 연결 및 대기 명령을 삭제합니다.',
   '상태': '내 도우미의 현재 상태와 마지막 명령 결과를 확인합니다.',
+  '오류업로드': '연결된 내 PC의 오류 자료를 운영자 전용 채널로 한 번 보냅니다.',
   '시작': '내 PC에서 감독모드 자동 진행을 시작합니다.',
   '이번판까지만': '현재 경기 완료 후 중지를 예약합니다.',
   '중지': '내 PC의 자동 진행을 중지합니다.'
@@ -17,7 +18,7 @@ export const commands = {
 const hash = value => createHash('sha256').update(value).digest('hex');
 const secret = () => randomBytes(32).toString('base64url');
 const reply = content => ({type: 4, data: {content, flags: 64, allowed_mentions: {parse: []}}});
-const actionNames = new Map([['시작', 'start'], ['이번판까지만', 'finish'], ['중지', 'stop']]);
+const actionNames = new Map([['시작', 'start'], ['이번판까지만', 'finish'], ['중지', 'stop'], ['오류업로드', 'upload-error']]);
 const identifier = value => typeof value === 'string' && /^\d{17,20}$/.test(value);
 
 export function createRelay({database, applicationId, publicKey, origin, diagnosticWebhook, sendWebhook, now = Date.now}) {
@@ -70,6 +71,8 @@ export function createRelay({database, applicationId, publicKey, origin, diagnos
     }
     const cmd = actionNames.get(name);
     if (!cmd) return reply('지원하지 않는 명령입니다.');
+    if (cmd === 'upload-error' && !diagnosticWebhook)
+      return reply('운영자 오류 채널이 설정되지 않았습니다. Mac 서버의 OPERATOR_DIAGNOSTIC_WEBHOOK을 설정하고 다시 실행하세요.');
     if (dev.request && dev.expires > time && cmd !== 'stop') return reply('이전 명령 처리 중입니다. /상태에서 확인하세요.');
     db.prepare('UPDATE devices SET command=?, request=?, expires=?, result=? WHERE owner=?')
       .run(cmd,event.id,time+12_000,'/'+name+' 접수',owner);
@@ -91,6 +94,11 @@ export function createRelay({database, applicationId, publicKey, origin, diagnos
   }
   const report = operatorDiagnostics(db,diagnosticWebhook,sendWebhook);
   const server = createServer(async (req,res) => {
+    let operation='서명 확인';
+    if (req.method === 'POST' && req.url === '/discord') {
+      const started=performance.now();
+      res.once('finish',()=>console.log('Discord '+operation+' · HTTP '+res.statusCode+' · '+Math.round(performance.now()-started)+' ms'));
+    }
     function send(code,body) {
       res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store'});
       res.end(JSON.stringify(body));
@@ -119,6 +127,7 @@ export function createRelay({database, applicationId, publicKey, origin, diagnos
       if (!data || typeof data !== 'object') return send(400,{});
       if (req.url === '/discord') {
         // Discord also uses a minimal signed PING when validating the endpoint.
+        operation=data.type===1 ? 'PING' : Object.hasOwn(commands,data.data?.name) ? '/'+data.data.name : '요청';
         if (data.type === 1 && data.application_id == null) return send(200,{type:1});
         if (data.application_id !== applicationId) return send(403,{});
         return send(200,atomic(() => interaction(data,time)));
