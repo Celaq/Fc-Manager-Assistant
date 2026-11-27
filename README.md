@@ -4,7 +4,16 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**Windows 도우미 v3.3.3 훈련코치 조합 판독**
+**Windows 도우미 v3.3.4 훈련코치 모집**
+
+[Windows 도우미](releases/FC_Manager_v3.3.4_Coach_Recruitment_Beta.zip) · [Mac 서버](releases/FC_Manager_Discord_Server_v3.3.3.zip)
+
+- 훈련코치 탭에서 최대 일곱 조합을 설정합니다. 예전 네 줄과 CP 한도를 불러오며, 목록을 스크롤하면 나머지 세 줄이 보입니다.
+- 같은 줄에서 동일 특성, GK 전용과 필드 특성의 혼합, ‘침투 요청에 즉각 반응’과 ‘재정비’의 조합을 차단합니다. 다른 공격·수비 특성쌍의 모집 제한은 아직 확인 중입니다.
+- 영입 성공 화면을 확인하면 개인 Discord 웹훅으로 조합 번호, 선택 특성, 후보 위치와 이번 실행의 총 사용 CP를 보냅니다.
+- 두 특성이 같은 아이콘으로 판독돼도 각 칸의 점수로 요청 조합이 가능한지 확인합니다. 새로 모집 버튼은 글자, 숫자 50, CP 아이콘을 확인하고 화면이 다시 그려지는 동안 재시도합니다.
+
+### Windows 도우미 v3.3.3 훈련코치 조합 판독
 
 [Windows 도우미](releases/FC_Manager_v3.3.3_Coach_Combination_Beta.zip) · [Mac 서버](releases/FC_Manager_Discord_Server_v3.3.3.zip)
 
