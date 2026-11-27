@@ -13,7 +13,10 @@ test('two Discord accounts in one guild only control their own active PC', async
   const s2 = '2'.repeat(32);
   let time = Date.now();
   let serial = 200000000000000000n;
+  const reports=[];
+  const webhook="https://discord.com/api/webhooks/100000000000000099/test-only";
   const relay = createRelay({origin:'https://relay.example',database:':memory:',applicationId:app,
+    diagnosticWebhook:webhook,sendWebhook:async(url,options)=>{reports.push({url,options});return {ok:true}},
     publicKey:publicKey.export({format:'der',type:'spki'}).subarray(-32).toString('hex'),now:() => time});
   relay.listen(0,'127.0.0.1');
   await once(relay,'listening');
@@ -45,6 +48,18 @@ test('two Discord accounts in one guild only control their own active PC', async
   assert.equal((await (await discord({type:1})).json()).type,1);
   const a = await pair(alice);
   const b = await pair(bob);
+  const incident={id:'a'.repeat(32),text:'coach test report',png:'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aXxkAAAAASUVORK5CYII='};
+  const deliver=(token,payload)=>post('/diagnostics',payload,{authorization:'Bearer '+token});
+  assert.equal((await deliver('x'.repeat(43),incident)).status,401);
+  assert.equal((await deliver(a,{...incident,png:'no image'})).status,400);
+  assert.equal(reports.length,0);
+  assert.equal((await deliver(a,incident)).status,200);
+  assert.equal((await deliver(a,incident)).status,200);
+  assert.equal(reports.length,1);
+  assert.equal(reports[0].url,webhook);
+  assert.equal(await reports[0].options.body.get('files[0]').text(),incident.text);
+  assert.equal(reports[0].options.body.get('files[1]').name,'capture.png');
+  assert.equal((await deliver(a,{...incident,id:'b'.repeat(32)})).status,429);
   assert.match(await slash(alice,'시작'),/오프라인/);
   await poll(a,s1);
   await poll(b,s2);

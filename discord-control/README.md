@@ -35,6 +35,12 @@
 4. Developer Portal의 **Interactions Endpoint URL**을 `https://fc.example.com/discord`로 저장합니다. Discord가 서명한 PING 요청으로 주소를 검사합니다.
 5. 두 번째 터미널에서 같은 `DISCORD_APPLICATION_ID`와 봇의 `DISCORD_BOT_TOKEN`을 설정합니다. 테스트 서버에 즉시 등록하려면 `DISCORD_GUILD_ID`도 설정하고 `node register.mjs`를 실행합니다. 전역 등록 시에는 `DISCORD_GUILD_ID`를 생략합니다. 봇 토큰은 명령 등록 시에만 필요하며 사용자 PC에는 배포하지 않습니다.
 
+## 운영자 오류 보고 채널
+
+맥 서버 v3.2.13 이상에서 기존 `server.env`에 `OPERATOR_DIAGNOSTIC_WEBHOOK`을 추가하고 값으로 운영자가 관리하는 Discord 채널의 웹훅 URL을 입력합니다. 서버를 다시 실행하면 적용됩니다. 기존 SQLite 데이터베이스를 계속 사용하면 PC 연결이 유지됩니다.
+
+Windows 도우미에서 **/연결**로 계정을 연결한 후 **Discord 알림 → 운영자에게 오류 자동 전송**을 켭니다. 코치 판독 실패, 감독모드 멈춤 등 처리된 오류가 발생하면 진단정보와 최근 실행 로그 최대 40줄을 보냅니다. 해당 오류의 캡처가 있고 2 MiB 이하면 이미지 한 장도 첨부합니다. 전송 결과는 도우미의 실행 기록에서 확인할 수 있습니다.
+
 ## 사용자 연결
 
 1. Windows에서 도우미 v3.2.10 이상을 실행하고 Discord에서 **/연결**을 입력합니다.

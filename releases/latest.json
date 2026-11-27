@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "3.2.12",
-  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.12_Coach_Board_Fix.zip",
-  "sha256": "b2e0fc3f50ae5c9b23f9a4914700e855d11a57107f53baa3dbef23bf523ec24e",
-  "notes": "훈련코치 모집 시작 직후 비용 표시를 읽지 못해 후보 판독이 멈추는 문제를 수정했습니다. CP는 해당 버튼의 비용 확인 후 사용합니다."
+  "version": "3.2.13",
+  "url": "https://raw.githubusercontent.com/Celaq/Fc-Manager-Assistant/main/releases/FC_Manager_v3.2.13_Coach_Images_Beta.zip",
+  "sha256": "6ea3f9d620b4abe182af0d9bc47278a4e5ac22741de2b3304cd14af3dd44335d",
+  "notes": "훈련코치 이름 OCR을 이미지 비교로 교체하고, 맥 서버 운영자 Discord 웹훅으로 오류 자료를 자동 전송하는 옵션을 추가했습니다."
 }

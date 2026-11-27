@@ -3,6 +3,8 @@ import { createHash, createPublicKey, randomBytes, verify } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 import { pathToFileURL } from 'node:url';
 
+import {operatorDiagnostics} from './diagnostics.mjs';
+
 export const commands = {
   '연결': '내 PC의 도우미에 입력할 개인 연결 링크를 받습니다.',
   '연결해제': '내 PC와의 연결 및 대기 명령을 삭제합니다.',
@@ -18,7 +20,7 @@ const reply = content => ({type: 4, data: {content, flags: 64, allowed_mentions:
 const actionNames = new Map([['시작', 'start'], ['이번판까지만', 'finish'], ['중지', 'stop']]);
 const identifier = value => typeof value === 'string' && /^\d{17,20}$/.test(value);
 
-export function createRelay({database, applicationId, publicKey, origin, now = Date.now}) {
+export function createRelay({database, applicationId, publicKey, origin, diagnosticWebhook, sendWebhook, now = Date.now}) {
   const base = new URL(origin);
   if (base.protocol !== 'https:' || base.origin !== origin || !identifier(applicationId) ||
       !/^[a-f\d]{64}$/i.test(publicKey)) throw Error('Invalid PUBLIC_ORIGIN or Discord application configuration');
@@ -87,12 +89,14 @@ export function createRelay({database, applicationId, publicKey, origin, now = D
     db.prepare('UPDATE devices SET session=?, seen=?, status=? WHERE owner=?').run(data.session,time,data.status,d.owner);
     return [200,{command:d.request ? {id:d.request, name:d.command, expires:d.expires} : null}];
   }
+  const report = operatorDiagnostics(db,diagnosticWebhook,sendWebhook);
   const server = createServer(async (req,res) => {
     function send(code,body) {
       res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store'});
       res.end(JSON.stringify(body));
     }
     try {
+      if (req.method === 'POST' && req.url === '/diagnostics') return await report(req,send,now());
       if (req.method !== 'POST' || !['/discord','/pair','/poll'].includes(req.url)) return send(404,{});
       const chunks = [];
       let size = 0;
@@ -143,6 +147,7 @@ export function createRelay({database, applicationId, publicKey, origin, now = D
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const server = createRelay({origin:process.env.PUBLIC_ORIGIN,applicationId:process.env.DISCORD_APPLICATION_ID,
+    diagnosticWebhook:process.env.OPERATOR_DIAGNOSTIC_WEBHOOK,
     publicKey:process.env.DISCORD_PUBLIC_KEY,database:process.env.DATABASE_PATH || 'discord-control.sqlite'});
   server.listen(Number(process.env.PORT || 3000),process.env.HOST || '127.0.0.1');
 }

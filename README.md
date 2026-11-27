@@ -4,7 +4,15 @@ FC 온라인 감독모드의 화면을 인식해 진행을 보조하는 Windows 
 
 ## 최신 테스트 버전
 
-**v3.2.12 훈련코치 모집 화면 판독 수정**
+**v3.2.13 훈련코치 이미지 비교 및 운영자 오류 보고**
+
+[Windows 도우미](releases/FC_Manager_v3.2.13_Coach_Images_Beta.zip) · [맥용 운영 서버](releases/FC_Manager_Discord_Server_v3.2.13.zip)
+
+- 모집을 시작하면 PC에서 넥슨 CDN의 기준 아이콘 48종을 한 번 받아 `.coach-icons`에 저장합니다. 저장된 조합은 그대로 사용하며 후보 특성 아이콘을 이미지로 판별합니다. 비교 결과가 모호하면 CP를 사용하지 않고 멈춥니다.
+- 맥 서버의 `server.env`에 `OPERATOR_DIAGNOSTIC_WEBHOOK`을 설정하고 서버를 다시 실행합니다. 연결된 PC의 **Discord 알림 → 운영자에게 오류 자동 전송**을 켜면 오류 시 진단정보·최근 로그·해당 캡처를 운영자 채널로 전송합니다. [운영자 설정](discord-control/README.md)
+- 녹화 장면과 테스트 웹훅으로 검사했습니다. 실게임에서 48종 전체의 인식률과 운영자 채널 수신은 실사용 검증 대상입니다.
+
+### v3.2.12 훈련코치 모집 화면 판독 수정
 
 [**v3.2.12 프로그램 ZIP 다운로드**](releases/FC_Manager_v3.2.12_Coach_Board_Fix.zip)
 
